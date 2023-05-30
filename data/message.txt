@@ -1,0 +1,5 @@
+This is a test message. It's contents are #!-Great-!# and
+include @things to test, like $4.23 and (this) or /these.
+It could also have 3*2^5 + 10%, right? Good > bad? Or < bad?
+It is code_worded & `unusual` like this ~: or [this;] or {"this"}.
+But it could get weird | like \this. You decide DonkeyMaster69.
