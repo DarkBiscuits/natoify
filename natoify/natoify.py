@@ -110,6 +110,7 @@ class Natoify:
             cleaned = ''.join(char for char in message if char.isascii())
         return cleaned
     
+
     def encode(self, message: str) -> str:
         """Convert a message string to NATO words
         """
@@ -146,6 +147,7 @@ class Natoify:
                 nato_message += self.codes_by_letter[char] + ' '
         
         return nato_message.strip()  # Remove trailing space
+
 
     def decode(self, message: str) -> str:
         """Decode a NATO message string into English
@@ -184,9 +186,10 @@ class Natoify:
                 decoded_line += word
             
             # Append decoded line to decoded message
-            decoded_msg += decoded_line + '\n'
+            decoded_msg += decoded_line.strip() + '\n'
 
         return decoded_msg.strip()  # Remove trailing newline
+
 
     def encrypt(self, message: str) -> str:
         pass
