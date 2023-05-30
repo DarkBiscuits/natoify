@@ -21,12 +21,16 @@ import sys
 import os
 import pytest
 
-module_path = os.path.abspath(os.path.join('nato_code'))
+module_path = os.path.abspath(os.path.join('.'))
+if module_path not in sys.path:
+    sys.path.append(module_path)
+print(module_path)
+module_path = os.path.abspath(os.path.join('../naotify/'))
 if module_path not in sys.path:
     sys.path.append(module_path)
 print(module_path)
 
-import nato_word
+from natoify.natoify import Natoify
 
 
 
@@ -56,5 +60,7 @@ def test_word_to_nato(word, expected):
         >>> word_to_nato("Hello")
         "Hotel Echo Lima Lima Oscar"
     """
-    assert nato_word.word_to_nato(word) == expected
+    nato = Natoify()
+
+    assert nato.encode(word) == expected
 
