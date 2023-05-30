@@ -6,7 +6,7 @@ import html
 
 class Natoify:
     """
-    Contains the encoders and decoders for text messages.
+    Contains the encoders and decoders for NATO phonetic alphabet text messages.
     """
 
     CODES_BY_LETTER = {
@@ -148,7 +148,45 @@ class Natoify:
         return nato_message.strip()  # Remove trailing space
 
     def decode(self, message: str) -> str:
-        pass
+        """Decode a NATO message string into English
+        """
+
+        # Catch empty message
+        if message == '' or message == None:
+            raise ValueError('Message cannot be empty')
+        
+        # Clean up message, remove non-ascii characters, and convert to uppercase
+        message = self._clean_message(message)
+        message = message.upper()
+        
+        # Initialize the decoded message variable
+        decoded_msg = ""
+
+        # Split message into a list of lines (list containing a string)
+        lines = message.split('\n')
+        
+        # Split each line's string into a list of code word
+        # groups that represent a single word
+        lines = [line.split('  ') for line in lines]
+
+        # Decode each line (list containing lists of code word groups)
+        for line in lines:
+            # Strip whitespace from each word group(of symbols (code words))
+            line = [word.strip() for word in line]
+            decoded_line = ""  # Collects a decoded line of words
+            
+            # Decode each group of symbols (that form a word)
+            for word in line:
+                symbols = word.split(' ')
+                word = [self.codes_by_word.get(symbol) for symbol in symbols if symbol != '']
+                word = ''.join(word) + ' '
+                # Append decoded word to decoded line
+                decoded_line += word
+            
+            # Append decoded line to decoded message
+            decoded_msg += decoded_line + '\n'
+
+        return decoded_msg.strip()  # Remove trailing newline
 
     def encrypt(self, message: str) -> str:
         pass
