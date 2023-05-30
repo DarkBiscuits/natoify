@@ -7,6 +7,21 @@ import html
 class Natoify:
     """
     Contains the encoders and decoders for NATO phonetic alphabet text messages.
+
+    Attributes:
+        codes_by_letter (dict): Dictionary of NATO phonetic code words keyed by letter
+        codes_by_word (dict): Dictionary of NATO phonetic code words keyed by word
+
+    Methods:
+        encode(message: str) -> str: Encode a message string to NATO phonetic words
+        decode(message: str) -> str: Decode a NATO message string into plain English
+        encrpyt(message: str) -> str: Encrypt a message after NATO encoding
+        decrypt(message: str) -> str: Decrypt an encrypted NATO message
+
+    Examples:
+        >>> nato = Natoify()
+        >>> nato.encode("Hello World!")
+        'HOTEL ECHO LIMA LIMA OSCAR  WHISKEY OSCAR ROMEO LIMA DELTA EXCLAMARK'
     """
 
     CODES_BY_LETTER = {
@@ -121,7 +136,7 @@ class Natoify:
     
 
     def encode(self, message: str) -> str:
-        """Convert a message string to NATO words
+        """Encode a message string to NATO phonetic words
         """
 
         # Catch empty message
@@ -159,7 +174,7 @@ class Natoify:
 
 
     def decode(self, message: str) -> str:
-        """Decode a NATO message string into English
+        """Decode a NATO message string into plain English
         """
 
         # Catch empty message
@@ -201,11 +216,13 @@ class Natoify:
 
 
     def encrypt(self, message: str) -> str:
+        """Encrypt a message after NATO encoding by reversing the message string"""
         msg = self.encode(message)
         rev = msg[::-1]
         return rev
 
     def decrypt(self, message: str) -> str:
+        """Decrypt an encoded NATO message by reversing and decoding the message string"""
         rev = message[::-1]
         msg = self.decode(rev)
         return msg
