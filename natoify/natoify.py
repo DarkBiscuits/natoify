@@ -98,6 +98,15 @@ class Natoify:
         by_words["STOP"] = "."
         return by_words
 
+    def _ultimately_unescape(self, s: str) -> str:
+        """A relentless loop for cleaning out web encoding from a string."""
+        unescaped = ""
+        while unescaped != s:
+            s = html.unescape(s)
+            unescaped = html.unescape(s)
+
+        return s
+    
     def _clean_message(self, message: str) -> str:
         """
         Cleans up a message string before encoding or decoding.
@@ -105,7 +114,7 @@ class Natoify:
         """
         cleaned = message
         # Try removing web encoding
-        message = html.unescape(message)
+        message = self._ultimately_unescape(message)
         if not message.isascii():
             cleaned = ''.join(char for char in message if char.isascii())
         return cleaned
@@ -192,7 +201,11 @@ class Natoify:
 
 
     def encrypt(self, message: str) -> str:
-        pass
+        msg = self.encode(message)
+        rev = msg[::-1]
+        return rev
 
     def decrypt(self, message: str) -> str:
-        pass
+        rev = message[::-1]
+        msg = self.decode(rev)
+        return msg
