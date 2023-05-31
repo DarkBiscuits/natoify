@@ -16,7 +16,7 @@ class Natoify:
     Methods:
         encode(message: str) -> str: Encode a message string to NATO phonetic words
         decode(message: str) -> str: Decode a NATO message string into plain English
-        encrpyt(message: str) -> str: Encrypt a message after NATO encoding
+        encrpyt(message: str) -> str: Encrypt after encoding a message to NATO phonetic words
         decrypt(message: str) -> str: Decrypt an encrypted NATO message
 
     Examples:
