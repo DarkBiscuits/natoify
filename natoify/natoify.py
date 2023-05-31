@@ -4,6 +4,7 @@ A utility to encode and decode text messages into NATO phonetic alphabet code wo
 
 import html
 
+
 class Natoify:
     """
     Contains the encoders and decoders for NATO phonetic alphabet text messages.
@@ -98,7 +99,6 @@ class Natoify:
         "\t": "\t",
     }
 
-
     def __init__(self):
         # Dictionary of NATO phonetic code words keyed by letter
         self.codes_by_letter = self.CODES_BY_LETTER
@@ -119,9 +119,8 @@ class Natoify:
         while unescaped != s:
             s = html.unescape(s)
             unescaped = html.unescape(s)
-
         return s
-    
+
     def _clean_message(self, message: str) -> str:
         """
         Cleans up a message string before encoding or decoding.
@@ -131,89 +130,85 @@ class Natoify:
         # Try removing web encoding
         message = self._ultimately_unescape(message)
         if not message.isascii():
-            cleaned = ''.join(char for char in message if char.isascii())
+            cleaned = "".join(char for char in message if char.isascii())
         return cleaned
-    
 
     def encode(self, message: str) -> str:
-        """Encode a message string to NATO phonetic words
-        """
+        """Encode a message string to NATO phonetic words"""
 
         # Catch empty message
-        if message == '' or message == None:
-            raise ValueError('Message cannot be empty')
-        
+        if message == "" or message == None:
+            raise ValueError("Message cannot be empty")
+
         # Clean up message, remove non-ascii characters, and convert to uppercase
         message = self._clean_message(message)
         message = message.upper()
-        message += ' '  # Add a space to prevent out of index errors
-        
+        message += " "  # Add a space to prevent out of index errors
+
         # Initialize the NATO message variable
-        nato_message = ''
+        nato_message = ""
 
         # Iterate through each character in the message and translate to NATO word
         for i, char in enumerate(message):
-            
             # Check if character is a period
-            if char == '.': 
+            if char == ".":
                 # Check if period is at end of sentence
-                if message[i+1] == ' ' or message[i+1] == '\n':
-                    nato_message += 'STOP '
+                if message[i + 1] == " " or message[i + 1] == "\n":
+                    nato_message += "STOP "
                 else:
                     # Period is part of a number or abbreviation
-                    nato_message += self.codes_by_letter[char] + ' '
-            
+                    nato_message += self.codes_by_letter[char] + " "
+
             # Only add a single space if character is a space
-            elif char == ' ':
-                nato_message += ' '
+            elif char == " ":
+                nato_message += " "
             else:
                 # Translate character to NATO word
-                nato_message += self.codes_by_letter[char] + ' '
-        
+                nato_message += self.codes_by_letter[char] + " "
+
         return nato_message.strip()  # Remove trailing space
 
-
     def decode(self, message: str) -> str:
-        """Decode a NATO message string into plain English
-        """
+        """Decode a NATO message string into plain English"""
 
         # Catch empty message
-        if message == '' or message == None:
-            raise ValueError('Message cannot be empty')
-        
+        if message == "" or message == None:
+            raise ValueError("Message cannot be empty")
+
         # Clean up message, remove non-ascii characters, and convert to uppercase
         message = self._clean_message(message)
         message = message.upper()
-        
+
         # Initialize the decoded message variable
         decoded_msg = ""
 
         # Split message into a list of lines (list containing a string)
-        lines = message.split('\n')
-        
+        lines = message.split("\n")
+
         # Split each line's string into a list of code word
         # groups that represent a single word
-        lines = [line.split('  ') for line in lines]
+        lines = [line.split("  ") for line in lines]
 
         # Decode each line (list containing lists of code word groups)
         for line in lines:
             # Strip whitespace from each word group(of symbols (code words))
             line = [word.strip() for word in line]
             decoded_line = ""  # Collects a decoded line of words
-            
+
             # Decode each group of symbols (that form a word)
             for word in line:
-                symbols = word.split(' ')
-                word = [self.codes_by_word.get(symbol) for symbol in symbols if symbol != '']
-                word = ''.join(word) + ' '
+                symbols = word.split(" ")
+                word = [
+                    self.codes_by_word.get(symbol) for symbol in symbols if symbol != ""
+                ]
+                word = "".join(word) + " "
                 # Append decoded word to decoded line
                 decoded_line += word
-            
+
             # Append decoded line to decoded message
-            decoded_msg += decoded_line.strip() + '\n'
+            decoded_msg += decoded_line.strip() + "\n"
 
         return decoded_msg.strip()  # Remove trailing newline
-
 
     def encrypt(self, message: str) -> str:
         """Encrypt a message after NATO encoding by reversing the message string"""
