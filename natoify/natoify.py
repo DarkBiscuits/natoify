@@ -5,6 +5,7 @@ A utility to encode and decode text messages into NATO phonetic alphabet code wo
 import html
 from .codes import NATO_BY_LETTER, VULGAR_BY_LETTER
 
+
 class Natoify:
     """
     Contains the encoders and decoders for NATO phonetic alphabet text messages.
@@ -12,19 +13,20 @@ class Natoify:
     Attributes:
         codes_by_letter (dict): Dictionary of NATO phonetic code words keyed by letter
         codes_by_word (dict): Dictionary of NATO phonetic code words keyed by word
+        CODE_OPTIONS (dict): Dictionary of valid code options
 
     Methods:
         encode(message: str) -> str: Encode a message string to NATO phonetic words
         decode(message: str) -> str: Decode a NATO message string into plain English
         encrpyt(message: str) -> str: Encrypt after encoding a message to NATO phonetic words
         decrypt(message: str) -> str: Decrypt an encrypted NATO message
+        set_code(code: str) -> None: Set the code to use for encoding and decoding
 
     Examples:
         >>> nato = Natoify()
         >>> nato.encode("Hello World!")
         'HOTEL ECHO LIMA LIMA OSCAR  WHISKEY OSCAR ROMEO LIMA DELTA EXCLAMARK'
     """
-
 
     CODE_OPTIONS = {
         "NATO": NATO_BY_LETTER,
@@ -58,17 +60,29 @@ class Natoify:
         Cleans up a message string before encoding or decoding.
         Attempts to remove any web encoding and non-ascii characters.
         """
-        cleaned = message
+        cleaned = message.strip()
         # Try removing web encoding
         message = self._ultimately_unescape(message)
         if not message.isascii():
             cleaned = "".join(char for char in message if char.isascii())
         return cleaned
-    
-    def set_code(self, code: str) -> None:
+
+    def set_code(self, code: str = "NATO") -> None:
         """
         Sets the code to use for encoding and decoding.
-        Valid options are "NATO" and "VULGAR".
+        Valid options are "NATO"(default) and "VULGAR".
+
+        Args:
+            code (str): The code type to use for encoding and decoding
+
+        Raises:
+            ValueError: If code type is not a valid option
+
+        Examples:
+            >>> nato = Natoify()
+            >>> nato.set_code("NATO")
+            >>> nato.encode("Hello World!")
+            'HOTEL ECHO LIMA LIMA OSCAR  WHISKEY OSCAR ROMEO LIMA DELTA EXCLAMARK'
         """
         code = code.upper()
         if code not in self.CODE_OPTIONS.keys():
@@ -128,7 +142,7 @@ class Natoify:
         # Decrypt message if decrypt is True
         if decrypt:
             message = self.decrypt(message)
-        
+
         # Ensure message is uppercase
         message = message.upper()
 
@@ -160,7 +174,7 @@ class Natoify:
 
             # Append decoded line to decoded message
             decoded_msg += decoded_line.strip() + "\n"
-        
+
         # Remove trailing newline
         decoded_msg = decoded_msg.strip()
 

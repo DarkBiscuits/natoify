@@ -20,6 +20,7 @@ nato_out_lower = "tango hotel india sierra  india sierra  alfa  tango echo sierr
 nato_out_encrypt = "APAP RACSO OGNAT ARREIS  POTS RUOF EERHT OWT ENO  POTS OHCE FLOG AFLA ARREIS ARREIS OHCE EKIM  OGNAT ARREIS OHCE OGNAT  AFLA  ARREIS AIDNI  ARREIS AIDNI LETOH OGNAT"
 symb_output = "EXCLAMARK AT HASHTAG DOLLARSIGN PERCENT CARET AMPERSAND ASTERISK LEFTPAREN RIGHTPAREN UNDERSCORE PLUS EQUAL DASH APOSTROPHE QUOTMARK COLON SEMICOLON QUESTMARK SLASH POINT COMMA GREATERTHAN LESSTHAN BACKSLASH PIPE BACKTICK TILDE LEFTSQUARE RIGHTSQUARE LEFTCURLY RIGHTCURLY"
 numb_output = "ONE TWO THREE FOUR FIVE  SIX SEVEN EIGHT NINE ZERO"
+vulgar_output = "HOE EATME LAMEASS LAMEASS ORFICE  WANKER ORFICE RIMJOB LAMEASS DOUCHBAG OSHIT"
 
 def test_nato_encode():
     """Test the encode function
@@ -144,5 +145,23 @@ def test_nato_decode_lowercase():
     nato_message = nato_out_lower
     message = nato.decode(nato_message)
     assert message == "THIS IS A TEST MESSAGE. 1234. STOP"
+
+def test_nato_encode_vulgar():
+    """Test the encode function with vulgar codes
+    """
+    # Test message
+    message = "Hello World!"
+    nato.set_code('vulgar')
+    nato_message = nato.encode(message)
+    assert nato_message == vulgar_output
+
+def test_nato_decode_vulgar():
+    """Test the decode function with vulgar codes
+    """
+    # Test message
+    nato_message = vulgar_output
+    nato.set_code('vulgar')
+    message = nato.decode(nato_message)
+    assert message == "HELLO WORLD!"
 
 
