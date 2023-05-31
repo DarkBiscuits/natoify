@@ -1,5 +1,5 @@
 """
-A utility to encode and decode text messages into NATO phonetic alphabet code words.
+Utilities to encode and decode text messages into NATO phonetic alphabet code words.
 """
 
 import html
