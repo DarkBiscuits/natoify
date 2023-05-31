@@ -3,7 +3,7 @@ A utility to encode and decode text messages into NATO phonetic alphabet code wo
 """
 
 import html
-
+from .codes import NATO_BY_LETTER, VULGAR_BY_LETTER
 
 class Natoify:
     """
@@ -25,83 +25,15 @@ class Natoify:
         'HOTEL ECHO LIMA LIMA OSCAR  WHISKEY OSCAR ROMEO LIMA DELTA EXCLAMARK'
     """
 
-    CODES_BY_LETTER = {
-        "A": "ALFA",
-        "B": "BRAVO",
-        "C": "CHARLIE",
-        "D": "DELTA",
-        "E": "ECHO",
-        "F": "FOXTROT",
-        "G": "GOLF",
-        "H": "HOTEL",
-        "I": "INDIA",
-        "J": "JULIET",
-        "K": "KILO",
-        "L": "LIMA",
-        "M": "MIKE",
-        "N": "NOVEMBER",
-        "O": "OSCAR",
-        "P": "PAPA",
-        "Q": "QUEBEC",
-        "R": "ROMEO",
-        "S": "SIERRA",
-        "T": "TANGO",
-        "U": "UNIFORM",
-        "V": "VICTOR",
-        "W": "WHISKEY",
-        "X": "X-RAY",
-        "Y": "YANKEE",
-        "Z": "ZULU",
-        "0": "ZERO",
-        "1": "ONE",
-        "2": "TWO",
-        "3": "THREE",
-        "4": "FOUR",
-        "5": "FIVE",
-        "6": "SIX",
-        "7": "SEVEN",
-        "8": "EIGHT",
-        "9": "NINE",
-        "-": "DASH",
-        ",": "COMMA",
-        ".": "POINT",
-        "@": "AT",
-        "?": "QUESTMARK",
-        "!": "EXCLAMARK",
-        "'": "APOSTROPHE",
-        '"': "QUOTMARK",
-        "(": "LEFTPAREN",
-        ")": "RIGHTPAREN",
-        "&": "AMPERSAND",
-        ":": "COLON",
-        ";": "SEMICOLON",
-        "/": "SLASH",
-        "\\": "BACKSLASH",
-        "+": "PLUS",
-        "=": "EQUAL",
-        "_": "UNDERSCORE",
-        "$": "DOLLARSIGN",
-        "%": "PERCENT",
-        "#": "HASHTAG",
-        "*": "ASTERISK",
-        "<": "LESSTHAN",
-        ">": "GREATERTHAN",
-        "^": "CARET",
-        "~": "TILDE",
-        "`": "BACKTICK",
-        "{": "LEFTCURLY",
-        "}": "RIGHTCURLY",
-        "[": "LEFTSQUARE",
-        "]": "RIGHTSQUARE",
-        "|": "PIPE",
-        " ": " ",
-        "\n": "\n",
-        "\t": "\t",
+
+    CODE_OPTIONS = {
+        "NATO": NATO_BY_LETTER,
+        "VULGAR": VULGAR_BY_LETTER,
     }
 
     def __init__(self):
         # Dictionary of NATO phonetic code words keyed by letter
-        self.codes_by_letter = self.CODES_BY_LETTER
+        self.codes_by_letter = NATO_BY_LETTER
         # Dictionary of NATO phonetic code words keyed by word
         self.codes_by_word = self._codes_by_word(self.codes_by_letter)
 
@@ -132,6 +64,17 @@ class Natoify:
         if not message.isascii():
             cleaned = "".join(char for char in message if char.isascii())
         return cleaned
+    
+    def set_code(self, code: str) -> None:
+        """
+        Sets the code to use for encoding and decoding.
+        Valid options are "NATO" and "VULGAR".
+        """
+        code = code.upper()
+        if code not in self.CODE_OPTIONS.keys():
+            raise ValueError("Invalid code option")
+        self.codes_by_letter = self.CODE_OPTIONS[code]
+        self.codes_by_word = self._codes_by_word(self.codes_by_letter)
 
     def encode(self, message: str, encrypt: bool = False) -> str:
         """Encode a message string to NATO phonetic words"""
