@@ -24,11 +24,7 @@ import pytest
 module_path = os.path.abspath(os.path.join('.'))
 if module_path not in sys.path:
     sys.path.append(module_path)
-print(module_path)
-module_path = os.path.abspath(os.path.join('../naotify/'))
-if module_path not in sys.path:
-    sys.path.append(module_path)
-print(module_path)
+# print(module_path)
 
 from natoify.natoify import Natoify
 

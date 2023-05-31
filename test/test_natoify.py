@@ -1,4 +1,4 @@
-# Tests for the nato_msg module
+# Tests for the natoify module
 
 import sys
 import os
@@ -7,11 +7,7 @@ import pytest
 module_path = os.path.abspath(os.path.join('.'))
 if module_path not in sys.path:
     sys.path.append(module_path)
-print(module_path)
-module_path = os.path.abspath(os.path.join('nato_code'))
-if module_path not in sys.path:
-    sys.path.append(module_path)
-print(module_path)
+# print(module_path)
 
 from natoify.natoify import Natoify
 
