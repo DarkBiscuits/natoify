@@ -133,7 +133,7 @@ class Natoify:
             cleaned = "".join(char for char in message if char.isascii())
         return cleaned
 
-    def encode(self, message: str) -> str:
+    def encode(self, message: str, encrypt: bool = False) -> str:
         """Encode a message string to NATO phonetic words"""
 
         # Catch empty message
@@ -166,17 +166,27 @@ class Natoify:
                 # Translate character to NATO word
                 nato_message += self.codes_by_letter[char] + " "
 
-        return nato_message.strip()  # Remove trailing space
+        # Remove trailing space
+        nato_message = nato_message.strip()
 
-    def decode(self, message: str) -> str:
+        # Encrypt message if encrypt is True
+        if encrypt:
+            nato_message = self.encrypt(nato_message)
+
+        return nato_message
+
+    def decode(self, message: str, decrypt: bool = False) -> str:
         """Decode a NATO message string into plain English"""
 
         # Catch empty message
         if message == "" or message == None:
             raise ValueError("Message cannot be empty")
 
-        # Clean up message, remove non-ascii characters, and convert to uppercase
-        message = self._clean_message(message)
+        # Decrypt message if decrypt is True
+        if decrypt:
+            message = self.decrypt(message)
+        
+        # Ensure message is uppercase
         message = message.upper()
 
         # Initialize the decoded message variable
@@ -207,17 +217,18 @@ class Natoify:
 
             # Append decoded line to decoded message
             decoded_msg += decoded_line.strip() + "\n"
+        
+        # Remove trailing newline
+        decoded_msg = decoded_msg.strip()
 
-        return decoded_msg.strip()  # Remove trailing newline
+        return decoded_msg
 
     def encrypt(self, message: str) -> str:
-        """Encrypt a message after NATO encoding by reversing the message string"""
-        msg = self.encode(message)
-        rev = msg[::-1]
-        return rev
+        """Encrypt a message by reversing the message string"""
+        msg = message[::-1]
+        return msg
 
     def decrypt(self, message: str) -> str:
-        """Decrypt an encoded NATO message by reversing and decoding the message string"""
-        rev = message[::-1]
-        msg = self.decode(rev)
+        """Decrypt a message by reversing the message string"""
+        msg = message[::-1]
         return msg
