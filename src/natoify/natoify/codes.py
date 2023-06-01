@@ -2,7 +2,7 @@
 Contains the code dictionaries for the NATO phonetic alphabet.
 """
 
-NATO_BY_LETTER = {
+NATO = {
     "A": "ALFA",
     "B": "BRAVO",
     "C": "CHARLIE",
@@ -76,7 +76,7 @@ NATO_BY_LETTER = {
     "\t": "\t",
 }
 
-VULGAR_BY_LETTER = {
+GHETTO = {
     "A": "ASSHAT",
     "B": "BULLSHIT",
     "C": "CUNT",
