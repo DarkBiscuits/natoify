@@ -50,7 +50,9 @@ class Natoify:
     CODE_LIBRARY = {}
 
     def __init__(self):
-        # Load the default codes (also sets code to prevent errors - Default is NATO)
+        self.codes_by_letter = {}
+        self.current_code = ""
+        # Load the default codes (also sets current code to prevent errors - Default is NATO)
         self.load_codes(self.CODE_LIB_DIR)
         # Generate dictionary of phonetic code words keyed by word (reverse of codes_by_letter)
         self.codes_by_word = self._codes_by_word(self.codes_by_letter)
@@ -121,7 +123,11 @@ class Natoify:
                 if not codes.keys() <= self.CODE_LIBRARY.keys():
                     # Add the code to the CODE_LIBRARY dictionary
                     self.CODE_LIBRARY.update(codes)
+        
+        # Set the code library to NATO or the first code in the library
+        self.reset_current_code()
 
+    def reset_current_code(self) -> None:
         # Set the code to the first code in the library
         # if NATO is not available (user set custom directory)
         if "NATO" not in self.CODE_LIBRARY.keys():
@@ -152,10 +158,12 @@ class Natoify:
         """
         code = code.upper()
         if code not in self.CODE_LIBRARY.keys():
-            raise ValueError("Invalid code option")
+            self.reset_current_code()
+            print("Invalid code library name. Library does not exist.")
         else:
             self.codes_by_letter = self.CODE_LIBRARY[code]
             self.codes_by_word = self._codes_by_word(self.codes_by_letter)
+            self.current_code = code
 
     def encode(self, message: str, encrypt: bool = False) -> str:
         """Encode a message string to NATO phonetic words"""
