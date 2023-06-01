@@ -67,6 +67,11 @@ class Natoify:
             cleaned = "".join(char for char in message if char.isascii())
         return cleaned
 
+    def list_codes(self) -> list:
+        """Generate list of available code libraries"""
+        return [code for code in self.CODE_OPTIONS.keys()]
+        
+    
     def set_code(self, code: str = "NATO") -> None:
         """
         Sets the code to use for encoding and decoding.
