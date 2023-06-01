@@ -164,4 +164,21 @@ def test_nato_decode_vulgar():
     message = nato.decode(nato_message)
     assert message == "HELLO WORLD!"
 
+def test_nato_decode_unencoded():
+    """Test the decode function with unincoded message
+    """
+    # Test message
+    nato_message = "HELLO WORLD!"
+    message = nato.decode(nato_message)
+    assert message == ""
+
+def test_nato_wrong_code_lib():
+    """Test if setting a non-existent code library resets to default (nato)
+    """
+    # set code library to non-existent name
+    nato.set_code('ljsfsj')
+    # should default to NATO (unless user set a custom directory)
+    current_code = nato.current_code
+    assert current_code == "NATO"
+
 
