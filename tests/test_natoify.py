@@ -151,7 +151,7 @@ def test_nato_encode_vulgar():
     """
     # Test message
     message = "Hello World!"
-    nato.set_code('vulgar')
+    nato.set_code('ghetto')
     nato_message = nato.encode(message)
     assert nato_message == vulgar_output
 
@@ -160,7 +160,7 @@ def test_nato_decode_vulgar():
     """
     # Test message
     nato_message = vulgar_output
-    nato.set_code('vulgar')
+    nato.set_code('ghetto')
     message = nato.decode(nato_message)
     assert message == "HELLO WORLD!"
 
