@@ -3,6 +3,7 @@ Utilities to encode and decode text messages into NATO phonetic alphabet code wo
 """
 
 import html
+import copy
 from .codes import NATO_BY_LETTER, VULGAR_BY_LETTER
 
 
@@ -70,8 +71,7 @@ class Natoify:
     def list_codes(self) -> list:
         """Generate list of available code libraries"""
         return [code for code in self.CODE_OPTIONS.keys()]
-        
-    
+
     def set_code(self, code: str = "NATO") -> None:
         """
         Sets the code to use for encoding and decoding.
@@ -138,7 +138,14 @@ class Natoify:
         return nato_message
 
     def decode(self, message: str, decrypt: bool = False) -> str:
-        """Decode a NATO message string into plain English"""
+        """Decode a NATO message string into plain English.
+
+        If message was not encoded or incorrect code library is set,
+        it will return an empty string or a few random words that matched.
+
+        :TODO: Add a check for the code library used to encode the message.
+        Make it fail early if it doesn't match the current code library.
+        """
 
         # Catch empty message
         if message == "" or message == None:
@@ -173,15 +180,22 @@ class Natoify:
                 word = [
                     self.codes_by_word.get(symbol) for symbol in symbols if symbol != ""
                 ]
-                word = "".join(word) + " "
-                # Append decoded word to decoded line
-                decoded_line += word
+                if word[0] != None:
+                    word = "".join(word) + " "
+                    # Append decoded word to decoded line
+                    decoded_line += word
 
             # Append decoded line to decoded message
             decoded_msg += decoded_line.strip() + "\n"
 
         # Remove trailing newline
         decoded_msg = decoded_msg.strip()
+
+        # Check for empty message
+        if decoded_msg == "":
+            print(
+                "ERROR: Message was either not NATOIFY encoded or code library was not set correctly"
+            )
 
         return decoded_msg
 
