@@ -3,8 +3,9 @@ Utilities to encode and decode text messages into NATO phonetic alphabet code wo
 """
 
 import html
-import copy
-from .codes import NATO_BY_LETTER, VULGAR_BY_LETTER
+import json
+import glob
+import os
 
 
 class Natoify:
@@ -14,7 +15,8 @@ class Natoify:
     Attributes:
         codes_by_letter (dict): Dictionary of NATO phonetic code words keyed by letter
         codes_by_word (dict): Dictionary of NATO phonetic code words keyed by word
-        CODE_OPTIONS (dict): Dictionary of valid code options
+        CODE_LIBRARY (dict): Dictionary of valid code options
+        CODE_LIB_DIR (str): Directory containing code.json files
 
     Methods:
         encode(message: str) -> str: Encode a message string to NATO phonetic words
@@ -22,22 +24,35 @@ class Natoify:
         encrpyt(message: str) -> str: Encrypt after encoding a message to NATO phonetic words
         decrypt(message: str) -> str: Decrypt an encrypted NATO message
         set_code(code: str) -> None: Set the code to use for encoding and decoding
+        list_codes() -> list: Generate list of available code libraries
+        load_codes(directory: str) -> None: Loads json code libraries from a directory (default: ../code_lib)
 
     Examples:
         >>> nato = Natoify()
         >>> nato.encode("Hello World!")
         'HOTEL ECHO LIMA LIMA OSCAR  WHISKEY OSCAR ROMEO LIMA DELTA EXCLAMARK'
+
+        >>> nato.decode("HOTEL ECHO LIMA LIMA OSCAR  WHISKEY OSCAR ROMEO LIMA DELTA EXCLAMARK")
+        'HELLO WORLD!'
+
+        >>> nato.encode("Hello World!", encrypt=True)
+        'KRAMA'
+
+        >>> nato.set_code("GHETTO")
+        >>> nato.encode("Hello World!")
+        'HOTEL ECHO LIMA LIMA OSCAR  WHISKEY OSCAR ROMEO LIMA DELTA EXCLAMARK'
     """
 
-    CODE_OPTIONS = {
-        "NATO": NATO_BY_LETTER,
-        "VULGAR": VULGAR_BY_LETTER,
-    }
+    # Get current director and path to code_lib directory
+    CURRENT_DIR = os.path.dirname(os.path.realpath(__file__))
+    CODE_LIB_DIR = os.path.join(CURRENT_DIR, "../code_lib")
+
+    CODE_LIBRARY = {}
 
     def __init__(self):
-        # Dictionary of NATO phonetic code words keyed by letter
-        self.codes_by_letter = NATO_BY_LETTER
-        # Dictionary of NATO phonetic code words keyed by word
+        # Load the default codes (also sets code to prevent errors - Default is NATO)
+        self.load_codes(self.CODE_LIB_DIR)
+        # Generate dictionary of phonetic code words keyed by word (reverse of codes_by_letter)
         self.codes_by_word = self._codes_by_word(self.codes_by_letter)
 
     def _codes_by_word(self, codes_by_letter: dict) -> dict:
@@ -68,14 +83,60 @@ class Natoify:
             cleaned = "".join(char for char in message if char.isascii())
         return cleaned
 
+    def load_codes(self, directory: str = "") -> None:
+        """
+        Loads custom code libraries from a directory containing code.json files.
+        The code.json file contains a json object of letter:word pairs.
+
+        Expected JSON: {"NATO": {"A": "ALPHA", "B": "BRAVO", ...}}
+
+        Args:
+            directory (str): The directory containing the code.json files. Defaults to "../code_lib"
+
+        Examples:
+            >>> nato = Natoify()
+            >>> nato.load_codes("../code_lib")
+            >>> nato.list_codes()
+            ['NATO', 'GHETTO', 'REDNECK', 'POTTER', 'STARWARS']
+        """
+        # Check if directory is empty
+        if directory == "":
+            directory = self.CODE_LIB_DIR
+
+        # Get a list of all the json files in the directory
+        json_files = glob.glob(f"{directory}/*.json")
+
+        # If there is a problem with the directory, raise an error
+        if len(json_files) == 0:
+            raise FileNotFoundError(f"No code.json files found in: {directory}")
+
+        # Iterate through each file and load the codes
+        for json_file in json_files:
+            with open(json_file, "r") as f:
+                codes = json.load(f)
+                # Check if the file contains a valid code library
+                # TODO: Add more validation
+
+                # Check for duplicate code names
+                if not codes.keys() <= self.CODE_LIBRARY.keys():
+                    # Add the code to the CODE_LIBRARY dictionary
+                    self.CODE_LIBRARY.update(codes)
+
+        # Set the code to the first code in the library
+        # if NATO is not available (user set custom directory)
+        if "NATO" not in self.CODE_LIBRARY.keys():
+            self.set_code(self.list_codes()[0])
+        else:
+            self.set_code("NATO")
+
     def list_codes(self) -> list:
-        """Generate list of available code libraries"""
-        return [code for code in self.CODE_OPTIONS.keys()]
+        """Generate list of available code library names"""
+        return [code for code in self.CODE_LIBRARY.keys()]
 
     def set_code(self, code: str = "NATO") -> None:
         """
         Sets the code to use for encoding and decoding.
-        Valid options are "NATO"(default) and "VULGAR".
+        Valid options are "NATO"(default) and "GHETTO".
 
         Args:
             code (str): The code type to use for encoding and decoding
@@ -90,10 +151,11 @@ class Natoify:
             'HOTEL ECHO LIMA LIMA OSCAR  WHISKEY OSCAR ROMEO LIMA DELTA EXCLAMARK'
         """
         code = code.upper()
-        if code not in self.CODE_OPTIONS.keys():
+        if code not in self.CODE_LIBRARY.keys():
             raise ValueError("Invalid code option")
-        self.codes_by_letter = self.CODE_OPTIONS[code]
-        self.codes_by_word = self._codes_by_word(self.codes_by_letter)
+        else:
+            self.codes_by_letter = self.CODE_LIBRARY[code]
+            self.codes_by_word = self._codes_by_word(self.codes_by_letter)
 
     def encode(self, message: str, encrypt: bool = False) -> str:
         """Encode a message string to NATO phonetic words"""
@@ -200,11 +262,15 @@ class Natoify:
         return decoded_msg
 
     def encrypt(self, message: str) -> str:
-        """Encrypt a message by reversing the message string"""
+        """Encrypt a message by reversing the message string
+        TODO: Add a real encryption method
+        """
         msg = message[::-1]
         return msg
 
     def decrypt(self, message: str) -> str:
-        """Decrypt a message by reversing the message string"""
+        """Decrypt a message by reversing the message string
+        TODO: Add a real decryption method
+        """
         msg = message[::-1]
         return msg
