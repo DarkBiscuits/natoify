@@ -8,8 +8,5 @@ decrypting messages. A command line interface and tkinter desktop app is also
 included for easy use. 
 """
 
-__version__ = "0.1.0"
-__author__ = "DarkBiscuit"
-
 
 from .engine import Natoify
