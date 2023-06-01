@@ -26,3 +26,15 @@
    - can test encoding/decoding without saving to file
    - checkbox to toggle encryption/decryption off/on
    - dropdown to set code type
+
+ - Create a code language loader
+   - Load code dictionaries from text files in package folder - /codes
+   - NATO and VULGAR remain embeded in .codes as defaults
+   - method to load, verify, and store additional codes from /codes
+   - adds code types to existing CODE_OPTIONS attribute for use
+   - codes are loaded as python dictionaries into a main dictionary
+     - keys will be the names used in CODE_OPTIONS for selection
+     - add all codes to LIBRARY dictionary at class creation (__init__)
+     - set_code() uses LIBRARY to set working code variables
+     - all methods created in codes.py - codes class?
+     - method to reload/update LIBRARY if code txt is added after program start
