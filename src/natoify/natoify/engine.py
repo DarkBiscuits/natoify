@@ -120,7 +120,7 @@ class Natoify:
             elif char == " ":
                 nato_message += " "
             else:
-                # Translate character to NATO word
+                # Translate character into NATO word
                 nato_message += self.codes_by_letter[char] + " "
 
         # Remove trailing space
