@@ -37,4 +37,4 @@
      - add all codes to LIBRARY dictionary at class creation (__init__)
      - set_code() uses LIBRARY to set working code variables
      - all methods created in codes.py - codes class?
-     - method to reload/update LIBRARY if code txt is added after program start
+     - method to reload/update LIBRARY if code txt is added after program start`
