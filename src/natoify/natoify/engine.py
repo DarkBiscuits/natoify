@@ -137,7 +137,9 @@ class Natoify:
 
     def list_codes(self) -> list:
         """Generate list of available code library names"""
-        return [code for code in self.CODE_LIBRARY.keys()]
+        c_list = [code for code in self.CODE_LIBRARY.keys()]
+        c_list.sort()
+        return c_list
 
     def set_code(self, code: str = "NATO") -> None:
         """
@@ -250,22 +252,25 @@ class Natoify:
                 word = [
                     self.codes_by_word.get(symbol) for symbol in symbols if symbol != ""
                 ]
-                if word[0] != None:
+                word = [w for w in word if w != None]
+                
+                # Check if word is not empty before joining
+                if len(word) != 0:
                     word = "".join(word) + " "
                     # Append decoded word to decoded line
                     decoded_line += word
 
             # Append decoded line to decoded message
-            decoded_msg += decoded_line.strip() + "\n"
+            if decoded_line != "":
+                decoded_msg += decoded_line.strip() + "\n"
 
         # Remove trailing newline
-        decoded_msg = decoded_msg.strip()
+        if decoded_msg != "":
+            decoded_msg = decoded_msg.strip()
 
         # Check for empty message
         if decoded_msg == "":
-            print(
-                "ERROR: Message was either not NATOIFY encoded or code library was not set correctly"
-            )
+            decoded_msg = "ERROR: Message was either not NATOIFY encoded or code library was not set correctly"
 
         return decoded_msg
 
