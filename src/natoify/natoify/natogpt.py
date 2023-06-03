@@ -91,6 +91,11 @@ class NatoGPT():
 
 		# Sort the messages so that the user and assistant messages are in order
 		messages = []
+		
+		# If there are more user messages than assistant messages, add a missing assistant message
+		if len(user_messages) > len(assistant_messages):
+			assistant_messages.append('MISSING ASSISTANT MESSAGE')
+
 		for i in range(len(user_messages)):
 			messages.append(user_messages[i])
 			messages.append(f"{'*'*60}")
