@@ -144,7 +144,7 @@ class Natoify:
     def set_code(self, code: str = "NATO") -> None:
         """
         Sets the code to use for encoding and decoding.
-        Valid options are "NATO"(default) and "GHETTO".
+        Valid options are "NATO"(default), "GHETTO", etc..
 
         Args:
             code (str): The code type to use for encoding and decoding
