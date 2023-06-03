@@ -28,13 +28,13 @@ class NatoGPT():
 	
 	"""
 
-	def __init__(self):
+	def __init__(self, api_key: str):
 		# Get current director and path to code_lib directory
 		CURRENT_DIR = os.path.dirname(os.path.realpath(__file__))
 		self.CHAT_LOG_DIR = os.path.join(CURRENT_DIR, "../chat_log")
 
 		# Set the api key and system message
-		openai.api_key = os.environ.get('OPENAI_API_KEY')
+		openai.api_key = api_key
 		self.set_new_session()
 	
 	def set_new_session(self) -> None:
