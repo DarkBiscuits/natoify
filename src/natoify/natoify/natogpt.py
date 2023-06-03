@@ -6,12 +6,26 @@ import os
 import json
 import glob
 import datetime
+from typing import Tuple
 import openai
 
 
 class NatoGPT():
 	"""
 	This class is used to chat with chatGPT.
+
+	Attributes:
+		CHAT_LOG_DIR (str): The path to the chat log directory.
+		messages (list): A list of messages in the chat session.
+		default_msg_len (int): The default length of the messages list.
+
+	Methods:
+		set_new_session() -> None: Set a new chat session.
+		add_to_chat(message: str) -> Tuple[str, str]: Add a message to the chat session.
+		save_chat_log() -> None: Save the chat session to the chat_log directory.
+		load_chat_log(chat_log: str) -> str: Load a chat log from the chat_log directory.
+		get_chat_logs() -> list: Get a list of all chat logs in the chat_log directory.
+	
 	"""
 
 	def __init__(self):
@@ -21,13 +35,16 @@ class NatoGPT():
 
 		# Set the api key and system message
 		openai.api_key = os.environ.get('OPENAI_API_KEY')
+		self.set_new_session()
+	
+	def set_new_session(self) -> None:
 		self.messages = [ {"role": "system", "content":
 					"You are a intelligent, friendly, and sarcasticly funny assistant."} ]
 		self.default_msg_len = len(self.messages)
 		
-	def add_to_chat(self, message: str) -> str:
+	def add_to_chat(self, message: str) -> Tuple[str, str]:
 		"""Send message to chatGPT and return the reply."""
-		
+		prompt = message
 		if message:
 			self.messages.append(
 				{"role": "user", "content": message},
@@ -36,9 +53,9 @@ class NatoGPT():
 				model="gpt-3.5-turbo", messages=self.messages
 			)
 		reply = chat.choices[0].message.content
-		print(f"ChatGPT: {reply}")
+		# print(f"ChatGPT: {reply}")
 		self.messages.append({"role": "assistant", "content": reply})
-		return reply
+		return prompt, reply
 
 	def save_chat_log(self) -> None:
 		"""Save the chat log to the chat_log directory.
@@ -76,7 +93,9 @@ class NatoGPT():
 		messages = []
 		for i in range(len(user_messages)):
 			messages.append(user_messages[i])
+			messages.append(f"{'*'*60}")
 			messages.append(assistant_messages[i])
+			messages.append(f"{'='*60}")
 		
 		# Convert the messages to a string
 		messages = '\n'.join(messages)
