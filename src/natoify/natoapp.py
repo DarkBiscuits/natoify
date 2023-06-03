@@ -68,9 +68,6 @@ class NatoApp(ctk.CTk):
         self.code_lib_list = []
         self.current_code_lib = "NATO"
 
-        # Setup the chatGPT engine
-        self.chat_eng = NatoGPT()
-        self.log_names_list = []
         
         # When a message is open and in editor
         self.current_file_path = ""
@@ -105,6 +102,19 @@ class NatoApp(ctk.CTk):
         # Load the code libraries into the dropdown
         self.update_code_lib_display()
 
+        # Check for openai key
+        gpt_key = ""
+        if not os.environ.get('OPENAI_API_KEY'):
+            get_key = ctk.CTkInputDialog(text="Enter your OpenAI API key", title="OpenAI API Key")
+            aikey = get_key.get_input()
+            if aikey:
+                gpt_key = aikey
+        else:
+            gpt_key = os.environ.get('OPENAI_API_KEY')
+
+        # Setup the chatGPT engine
+        self.chat_eng = NatoGPT(gpt_key)
+        self.log_names_list = []
 
     def tabview_callback(self):
         """ Callback function for when the tabview changes tab. """
