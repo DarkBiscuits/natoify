@@ -18,16 +18,16 @@ Features:
 
 # Imports
 import os
-import sys
 import shutil
+import threading
 import json
-import tkinter as tk
-from tkinter import ttk
 from tkinter import filedialog, messagebox
 
 import customtkinter as ctk
 
 from natoify.engine import Natoify
+from natoify.natogpt import NatoGPT
+
 
 # Constants
 __version__ = "0.1.0"
@@ -36,7 +36,26 @@ THEME_COLORS = ["blue", "dark-blue", "green"]
 # Classes
 
 class NatoApp(ctk.CTk):
-    """ The main application class for natoify. """
+    """ The main application class for natoify. 
+    
+    Attributes:
+        nato_eng (NatoEngine): The engine used to convert text to NATO phonetic alphabet.
+        decode (bool): Whether to decode the text or not.
+        encrypt (int): The encryption level to use.
+        code_lib_list (list): A list of all code libraries.
+        current_code_lib (str): The current code library.
+        chat_eng (NatoGPT): The engine used to chat with chatGPT.
+        log_names_list (list): A list of all chat logs.
+        current_file_path (str): The path to the current file.
+        play_mode (str): The mode to use for the playground.
+        title_text (str): The text to use for the title.
+
+    Methods:
+        tabview_callback(event: Event) -> None: The callback for the tabview.
+        generate_nato_text() -> None: Generate the NATO text.
+        update_code_lib_display() -> None: Update the code library display.
+        TODO: Finish documenting methods.
+    """
     
     def __init__(self):
         super().__init__()
@@ -48,6 +67,10 @@ class NatoApp(ctk.CTk):
         self.encrypt = 0
         self.code_lib_list = []
         self.current_code_lib = "NATO"
+
+        # Setup the chatGPT engine
+        self.chat_eng = NatoGPT()
+        self.log_names_list = []
         
         # When a message is open and in editor
         self.current_file_path = ""
@@ -185,6 +208,8 @@ class NatoApp(ctk.CTk):
 
     def set_play_mode(self, btn_name: str):
         """ Set the play mode. """
+        self.tabview.save_chat_btn.configure(state="disabled")
+        self.tabview.chat_list_dd.configure(state="disabled")
         if btn_name == "All":
             self.play_mode = "All"
             # Set the encode button to encode and disabled
@@ -194,6 +219,8 @@ class NatoApp(ctk.CTk):
             self.play_mode = "ChatGPT"
             # Set the encode button to disabled
             # self.toppanel.enc_dec_btn.configure(state="disabled")
+            self.tabview.save_chat_btn.configure(state="normal")
+            self.update_chat_session_ddlist()
         else:
             self.play_mode = "Current"
             # Set the encode button to normal
@@ -250,7 +277,37 @@ class NatoApp(ctk.CTk):
             self.tabview.text_play.insert("0.0", ntxt)
             # self.tabview.text_play.see("end")
         elif self.play_mode == "ChatGPT":
-            pass
+            # Get the current text in the entry box
+            txt = self.tabview.play_entry.get("0.0", "end")
+
+            # Run the add_to_chat method in another thread
+            t = threading.Thread(target=self.add_to_chat_thread, args=(txt,))
+            t.start()
+
+            # Clear the entry box
+            self.tabview.play_entry.delete("0.0", "end")
+            self.tabview.play_entry.insert("0.0", "Waiting for AI response...") 
+
+
+    def add_to_chat_thread(self, txt: str):
+        # Send message to chatbot
+        prompt, response = self.chat_eng.add_to_chat(txt)
+        
+        # Update the editor
+        self.tabview.play_entry.delete("0.0", "end")
+        self.tabview.text_play.insert("end", f"{prompt}\n{'*'*60}\n{response}\n{'='*60}\n")
+        self.tabview.text_play.see("end")
+
+    def save_chat_session(self):
+        self.chat_eng.save_chat_log()
+        self.update_chat_session_ddlist()
+        self.tabview.chat_list_dd.set(self.log_names_list[0])
+
+    def update_chat_session_ddlist(self):
+        self.log_names_list = [os.path.basename(name) for name in self.chat_eng.get_chat_logs()]
+        self.log_names_list.append("New Session")
+        self.tabview.chat_list_dd.configure(values=self.log_names_list, state="readonly")
+        self.tabview.chat_list_dd.set("New Session")
 
 
 
@@ -395,14 +452,24 @@ class MainTabView(ctk.CTkTabview):
         self.using_btns.grid(row=0, column=0, padx=5, pady=5, sticky="sw")
         self.using_btns.set("Current")
 
+        self.save_chat_btn = ctk.CTkButton(master=self.play_btns_frm, text="Save Chat Log",
+                                             command=self.save_chat)
+        self.save_chat_btn.grid(row=1, column=0, padx=5, pady=5, sticky="sw")
+        self.save_chat_btn.configure(state="disabled")
+
         self.play_entry = ctk.CTkTextbox(master=self.play_btns_frm)
-        self.play_entry.grid(row=0, column=1, padx=5, pady=5, sticky="ew")
+        self.play_entry.grid(row=0, column=1, rowspan=2, padx=5, pady=5, sticky="ew")
+
+        self.chat_list_dd = ctk.CTkComboBox(master=self.play_btns_frm, 
+                                         values=["Unsaved Session"], command=self.set_chat_log)
+        self.chat_list_dd.configure(state="disabled")
+        self.chat_list_dd.grid(row=0, column=2, padx=5, pady=5, sticky="se")
 
         self.enter_btn = ctk.CTkButton(master=self.play_btns_frm, text="Enter",
                                         command=self.master.update_playground)
-        self.enter_btn.grid(row=0, column=2, padx=5, pady=5, sticky="se")
+        self.enter_btn.grid(row=1, column=2, padx=5, pady=5, sticky="se")
         
-        self.play_entry.configure(width=0, height=50, corner_radius=c_r, 
+        self.play_entry.configure(width=0, height=60, corner_radius=c_r, 
                                 wrap=wrp, font=fnt)
         
         # Buttons for CodeEditor tab lower frame
@@ -461,6 +528,21 @@ class MainTabView(ctk.CTkTabview):
         """ Clear the code editor. """
         self.text_edit.delete("0.0", "end")
 
+    def set_chat_log(self, chat_log: str) -> None:
+        """ Set the chat log to the given chat log. """
+        if chat_log == "New Session":
+            self.text_play.delete("0.0", "end")
+            self.master.chat_eng.set_new_session()
+            return
+        else:
+            self.chat_list_dd.set(chat_log)
+            session_txt = self.master.chat_eng.load_chat_log(chat_log)
+            self.text_play.delete("0.0", "end")
+            self.text_play.insert("0.0", session_txt)
+
+    def save_chat(self) -> None:
+        """ Save the current chat log to a file. """
+        self.master.save_chat_session()
 
 
 
