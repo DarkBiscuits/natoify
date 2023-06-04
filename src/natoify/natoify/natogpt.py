@@ -8,6 +8,8 @@ import glob
 import datetime
 from typing import Tuple
 import openai
+import tiktoken
+from tkinter import messagebox
 
 
 class NatoGPT():
@@ -35,26 +37,47 @@ class NatoGPT():
 
 		# Set the api key and system message
 		openai.api_key = api_key
+		self.all_messages = []
 		self.set_new_session()
+		self.current_tokens = 0
 	
 	def set_new_session(self) -> None:
 		self.messages = [ {"role": "system", "content":
-					"You are a intelligent, friendly, and sarcasticly funny assistant."} ]
+					"You are a intelligent, friendly, and funny assistant."} ]
+		self.all_messages.append(self.messages[0])
 		self.default_msg_len = len(self.messages)
 		
 	def add_to_chat(self, message: str) -> Tuple[str, str]:
 		"""Send message to chatGPT and return the reply."""
 		prompt = message
+		
 		if message:
-			self.messages.append(
-				{"role": "user", "content": message},
-			)
+			# Check token count and shorten messages if necessary
+			msg = {"role": "user", "content": message}
+			msgs_tokens = self.num_tokens_from_messages(self.messages)
+			msgs_tokens += self.num_tokens_from_messages([msg])
+
+			if msgs_tokens > 2500:
+				num_back = int(len(self.messages) / 2) * -1
+				self.messages = self.messages[num_back:]
+		
+			self.messages.append(msg)
+			self.all_messages.append(msg)
+
 			chat = openai.ChatCompletion.create(
 				model="gpt-3.5-turbo", messages=self.messages
 			)
-		reply = chat.choices[0].message.content
-		# print(f"ChatGPT: {reply}")
-		self.messages.append({"role": "assistant", "content": reply})
+			reply = chat.choices[0].message.content
+			
+			# Add the reply to the messages list
+			rply = {"role": "assistant", "content": reply}
+			self.messages.append(rply)
+			self.all_messages.append(rply)
+
+			msgs_tokens = self.num_tokens_from_messages(self.messages)
+			self.current_tokens = msgs_tokens
+			print(f'Last msg total tokens: {msgs_tokens}')
+		
 		return prompt, reply
 
 	def save_chat_log(self) -> None:
@@ -63,7 +86,7 @@ class NatoGPT():
 		chat session has occurred.
 		"""
 		# Check if a chat session has occurred, if not, return
-		if len(self.messages) == self.default_msg_len:
+		if len(self.all_messages) == self.default_msg_len:
 			return
 
 		# Get the current date and time to form the chat log name
@@ -73,7 +96,7 @@ class NatoGPT():
 
 		# Save the chat log to the chat_log directory
 		with open(chat_fpath, 'w') as f:
-			json.dump(self.messages, f, indent=4)
+			json.dump(self.all_messages, f, indent=4)
 
 	def load_chat_log(self, chat_log: str) -> str:
 		"""Load a chat log by name from the chat_log directory."""
@@ -82,12 +105,23 @@ class NatoGPT():
 		fpath = os.path.join(self.CHAT_LOG_DIR, chat_log)
 
 		# Load the chat log
-		with open(fpath, 'r') as f:
-			self.messages = json.load(f)
+		try:
+			with open(fpath, 'r') as f:
+				self.messages = json.load(f)
+		except json.decoder.JSONDecodeError:
+			messagebox.showerror("Error", "Improperly formated json. Probably a failed final response. Check the file.")
+			return
+
+		# Load the all_messages list and reduce the messages list if necessary
+		# TODO: This is a hacky way to do this. Fix it. Reduce by the proper fraction.
+		self.all_messages = [msg for msg in self.messages]
+		if self.num_tokens_from_messages(self.messages) > 2500:
+			num_back = int(len(self.messages) / 2) * -1
+			self.messages = self.messages[num_back:]
 
 		# Get the user and assistant messages
-		user_messages = [m['content'] for m in self.messages if m['role'] == 'user']
-		assistant_messages = [m['content'] for m in self.messages if m['role'] == 'assistant']
+		user_messages = [m['content'] for m in self.all_messages if m['role'] == 'user']
+		assistant_messages = [m['content'] for m in self.all_messages if m['role'] == 'assistant']
 
 		# Sort the messages so that the user and assistant messages are in order
 		messages = []
@@ -112,4 +146,35 @@ class NatoGPT():
 		# Get the path to the chat log
 		chat_files = glob.glob(f"{self.CHAT_LOG_DIR}/*.json")
 		return sorted(chat_files, key=os.path.getmtime, reverse=True)
+	
+	def num_tokens_from_messages(self, messages, model="gpt-3.5-turbo-0301"):
+		"""Returns the number of tokens used by a list of messages."""
+		try:
+			encoding = tiktoken.encoding_for_model(model)
+		except KeyError:
+			print("Warning: model not found. Using cl100k_base encoding.")
+			encoding = tiktoken.get_encoding("cl100k_base")
+		if model == "gpt-3.5-turbo":
+			print("Warning: gpt-3.5-turbo may change over time. Returning num tokens assuming gpt-3.5-turbo-0301.")
+			return self.num_tokens_from_messages(messages, model="gpt-3.5-turbo-0301")
+		elif model == "gpt-4":
+			print("Warning: gpt-4 may change over time. Returning num tokens assuming gpt-4-0314.")
+			return self.num_tokens_from_messages(messages, model="gpt-4-0314")
+		elif model == "gpt-3.5-turbo-0301":
+			tokens_per_message = 4  # every message follows <|start|>{role/name}\n{content}<|end|>\n
+			tokens_per_name = -1  # if there's a name, the role is omitted
+		elif model == "gpt-4-0314":
+			tokens_per_message = 3
+			tokens_per_name = 1
+		else:
+			raise NotImplementedError(f"""num_tokens_from_messages() is not implemented for model {model}. See https://github.com/openai/openai-python/blob/main/chatml.md for information on how messages are converted to tokens.""")
+		num_tokens = 0
+		for message in messages:
+			num_tokens += tokens_per_message
+			for key, value in message.items():
+				num_tokens += len(encoding.encode(value))
+				if key == "name":
+					num_tokens += tokens_per_name
+		num_tokens += 3  # every reply is primed with <|start|>assistant<|message|>
+		return num_tokens
 
