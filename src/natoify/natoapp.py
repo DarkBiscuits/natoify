@@ -290,13 +290,17 @@ class NatoApp(ctk.CTk):
             # Get the current text in the entry box
             txt = self.tabview.play_entry.get("0.0", "end")
 
+            # Clear the entry box
+            prompt = self.tabview.play_entry.get("0.0", "end")
+            self.tabview.text_play.insert("end", f"{prompt}\n{'*'*60}\n")
+            self.tabview.text_play.see("end")
+            self.tabview.play_entry.delete("0.0", "end")
+            wait_txt = f"Last message tokens: {self.chat_eng.current_tokens}\nWaiting for AI response..."
+            self.tabview.play_entry.insert("0.0", wait_txt) 
+            
             # Run the add_to_chat method in another thread
             t = threading.Thread(target=self.add_to_chat_thread, args=(txt,))
             t.start()
-
-            # Clear the entry box
-            self.tabview.play_entry.delete("0.0", "end")
-            self.tabview.play_entry.insert("0.0", "Waiting for AI response...") 
 
 
     def add_to_chat_thread(self, txt: str):
@@ -305,7 +309,8 @@ class NatoApp(ctk.CTk):
         
         # Update the editor
         self.tabview.play_entry.delete("0.0", "end")
-        self.tabview.text_play.insert("end", f"{prompt}\n{'*'*60}\n{response}\n{'='*60}\n")
+        self.tabview.text_play.insert("end", f"{response}\n{'='*60}\n")
+        self.tabview.text_play.insert("end", f"Last Message Tokens: {self.chat_eng.current_tokens}\n{'='*60}\n")
         self.tabview.text_play.see("end")
 
     def save_chat_session(self):
