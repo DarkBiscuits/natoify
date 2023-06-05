@@ -106,3 +106,15 @@
 8. RAINBOW RENAISSANCE - Words inspired by every color of the rainbow, including indigo, violet, magenta, and chartreuse.
 9. PIRATE PARADISE - Words inspired by pirates, their ships, and their treasure, like Captain Hook, Jolly Roger, and pieces of eight.
 10. PENGUIN PALOOZA - Words inspired by our tuxedoed friends, including waddling, flippers, and rookeries.
+
+- scarface
+- fastandfurious
+- riddick
+- pulpfiction
+- terminator
+- facebook
+- twitter
+- instagram
+- killbill
+- jackreacher
+- johnwick

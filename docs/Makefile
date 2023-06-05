@@ -20,6 +20,10 @@ endif
 help:
 	@$(SPHINXBUILD) -M help "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
 
+# Generate sphinx docs from code documentation
+apidoc:
+	sphinx-apidoc -f -o "$(SOURCEDIR)" "../src/natoify"
+
 clean:
 	rm -rf $(BUILDDIR)/* $(AUTODOCDIR)
 

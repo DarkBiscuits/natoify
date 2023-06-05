@@ -1,5 +1,5 @@
-Modules
-==========
+natoify
+=======
 
 .. toctree::
    :maxdepth: 4
