@@ -26,13 +26,6 @@
 
 
 
-<!-- PROJECT LOGO -->
-<br />
-<div align="center">
-  <a href="https://github.com/darkbiscuits/natoify">
-    <img src="_static/DarkBiscuit.jpg" alt="Logo" width="80" height="80">
-  </a>
-
 <h1 align="center">Natoify</h1>
 
   <p align="center">
@@ -78,8 +71,10 @@
 <!-- ABOUT THE PROJECT -->
 # About The Project
 
-[![Natoify: natocli Screen Shot][natocli-screenshot]](_static/natocli-screenshot.png)
-[![Natoify: natoapp Screen Shot][natoapp-screenshot]](_static/natoapp-screenshot.png)
+![Natoify: natocli Screen Shot][natocli-screenshot]
+
+
+![Natoify: natoapp Screen Shot][natoapp-screenshot]
 
 What started as a simple coding challenge while taking a basic Python course has 
 gone horribly wrong...thanks to Github Copilot and chatGPT. AI tools
@@ -176,7 +171,7 @@ To run the desktop app:
 OR:
 1. Or clone the repo:
    ```sh
-   git clone https://github.com/darkbiscuits/natoify.git
+   git clone 'https://github.com/darkbiscuits/natoify.git'
    ```
 2. And install required PYPI packages (see requirements.txt):
    ```sh
@@ -219,7 +214,7 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 <!-- CONTACT -->
 # Contact
 
-DarkBiscuits on Github
+<img src="_static/DarkBiscuit.jpg" alt="DarkBiscuits" width="80" height="80"> DarkBiscuits on Github
 
 Project Link: [https://github.com/darkbiscuits/natoify](https://github.com/darkbiscuits/natoify)
 
@@ -240,8 +235,8 @@ Project Link: [https://github.com/darkbiscuits/natoify](https://github.com/darkb
 [issues-url]: https://github.com/darkbiscuits/natoify/issues
 [license-shield]: https://img.shields.io/github/license/darkbiscuits/natoify.svg?style=for-the-badge
 [license-url]: https://github.com/darkbiscuits/natoify/blob/master/LICENSE.txt
-[natocli-screenshot]: images/natocli-screenshot.png
-[natoapp-screenshot]: images/natoapp-screenshot.png
+[natocli-screenshot]: _static/natocli-screenshot.png
+[natoapp-screenshot]: _static/natoapp-screenshot.png
 [VScode.com]: https://img.shields.io/static/v1?label=VScode&message=OSX-13.3&color=9fc&style=for-the-badge
 [VScode-url]: https://code.visualstudio.com/
 [github.com]: https://img.shields.io/static/v1?label=Github&message=Copilot&color=yellowgreen&style=for-the-badge
