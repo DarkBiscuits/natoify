@@ -25,8 +25,8 @@ from tkinter import filedialog, messagebox
 
 import customtkinter as ctk
 
-from natocore.engine import Natoify
-from natocore.natogpt import NatoGPT
+import natocore.engine
+import natocore.natogpt
 
 
 # Constants
@@ -113,7 +113,7 @@ class NatoApp(ctk.CTk):
             gpt_key = os.environ.get('OPENAI_API_KEY')
 
         # Setup the chatGPT engine
-        self.chat_eng = NatoGPT(gpt_key)
+        self.chat_eng = natocore.natogpt.NatoGPT(gpt_key)
         self.log_names_list = []
 
     def tabview_callback(self):
@@ -565,7 +565,7 @@ class NatoEngine():
     """ The main engine for natoify. """
     def __init__(self, master):
         self.master = master
-        self.nato = Natoify()
+        self.nato = natocore.engine.Natoify()
         self.code_lib_path = self.nato.CODE_LIB_DIR
         self.current_code = self.nato.current_code
 
