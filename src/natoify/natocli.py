@@ -44,17 +44,18 @@ Examples:
 
 import click
 
-import natocore.engine as engine
+# import natocore.engine as engine
+from natoify import Natoify
 
 
-def show_codes(nato: engine.Natoify) -> None:
+def show_codes(nato: Natoify) -> None:
     """Send list of available codes to stdout"""
     click.echo("Available code libraries:")
     for code in nato.list_codes():
         click.echo(f"\t{code}")
 
 
-def try_set_code(code: str, nato: engine.Natoify) -> bool:
+def try_set_code(code: str, nato: Natoify) -> bool:
     """Set code library for natoify engine
     Fail gracefully if code is not available
     """
@@ -86,7 +87,7 @@ def interactive_mode(code: str = "NATO") -> None:
     click.echo("Enter message to encode. (or press Enter to quit)")
 
     # Initialize natoify engine
-    nato = engine.Natoify()
+    nato = Natoify()
     encrypt = False
 
     # Main loop for interactive mode
@@ -224,7 +225,7 @@ def run(message, output, decode, encrypted, code, list_codes, repl):
     # Determine mode of operation
     if list_codes:
         # List available codes and exit
-        nato = engine.Natoify()
+        nato = Natoify()
         show_codes(nato)
         exit(0)
     elif repl:
@@ -234,7 +235,7 @@ def run(message, output, decode, encrypted, code, list_codes, repl):
     else:
         # Run in normal mode. Read from file or stdin, write to file or stdout
         # Initialize natoify engine
-        nato = engine.Natoify()
+        nato = Natoify()
 
         # Set code for encoding/decoding
         if not try_set_code(code, nato):

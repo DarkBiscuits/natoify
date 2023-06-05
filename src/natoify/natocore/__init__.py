@@ -8,5 +8,6 @@ decrypting messages. A command line interface and customtkinter desktop app is a
 included for easy use. 
 """
 
-
+from .engine import Natoify
+from .natogpt import NatoGPT
 
