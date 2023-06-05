@@ -78,8 +78,8 @@
 <!-- ABOUT THE PROJECT -->
 # About The Project
 
-[![Natoify: natocli Screen Shot][natocli-screenshot]](https://example.com)
-[![Natoify: natoapp Screen Shot][natoapp-screenshot]](https://example.com)
+[![Natoify: natocli Screen Shot][natocli-screenshot]](_static/natocli-screenshot.png)
+[![Natoify: natoapp Screen Shot][natoapp-screenshot]](_static/natoapp-screenshot.png)
 
 What started as a simple coding challenge while taking a basic Python course has 
 gone horribly wrong...thanks to Github Copilot and chatGPT. AI tools

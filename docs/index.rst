@@ -18,10 +18,9 @@ Contents
 
 Overview
 --------
-.. note::
 
-    What started as a simple coding challenge while taking a basic Python course has 
-gone horribly \(wonderfully\) wrong...thanks to Github Copilot and chatGPT. AI tools
+What started as a simple coding challenge while taking a basic Python course has 
+gone horribly wrong...thanks to Github Copilot and chatGPT. AI tools
 made it easy to continue building out a simple script into a full blown program, 
 complete with cli interface and windowed desktop app. What does it do?
 
@@ -40,9 +39,9 @@ customtkinter library \(cross-platform\).
 
 See the :doc:`README` for more information.
 
-.. Image:: images/natocli-screenshot.png
+.. Image:: _static/natocli-screenshot.png
    
-.. Image:: images/natoapp-screenshot.png
+.. Image:: _static/natoapp-screenshot.png
 
 Quick Reference
 ------------------------
