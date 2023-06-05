@@ -80,10 +80,10 @@ def interactive_mode(code: str = "NATO") -> None:
         None
     """
     # Welcome to interactive mode showing commands
-    click.echo(f"\nWelcome to interactive mode. (using '{code}' code)\n")
+    click.echo(f"\n\033[34mWelcome to interactive mode. (using '{code}' code)\n")
     click.echo("Type '>??' to enter options mode.")
     click.echo("Use options mode to change code library or toggle encryption.\n")
-    click.echo("Enter message to encode. (or press Enter to quit)")
+    click.echo("Enter message to encode. (or press Enter to quit)\033[0m")
 
     # Initialize natoify engine
     nato = Natoify()
@@ -92,40 +92,40 @@ def interactive_mode(code: str = "NATO") -> None:
     # Main loop for interactive mode
     while True:
         # Get input from user
-        msg = input("Enter message: ")
+        msg = input("\033[34mEnter message:\033[0m\n")
         if msg == "":
             # Exit main loop
             click.echo("Exiting...")
             exit(1)
         elif msg == ">??":
             # Options mode loop
-            click.echo("Options mode:")
+            click.echo("\033[32mOptions mode:")
             click.echo("\t'c' to change code library")
             click.echo("\t'e' to toggle encryption")
-            click.echo("\t'ENTER' to resume encoding")
+            click.echo("\t'ENTER' to resume encoding\033[0m")
             while True:
-                opt = input("Enter option: ")
+                opt = input("\033[32mEnter option:\033[0m\n")
                 if opt == "c":
                     # Change code library
                     show_codes(nato)
-                    code = input("Enter code: ")
+                    code = input("\033[32mEnter code:\033[0m\n")
                     if try_set_code(code, nato):
-                        click.echo(f"Code set to '{code}'")
+                        click.echo(f"\033[32mCode set to '{code}'\033[0m")
                     else:
                         click.echo(
-                            f"Error: '{code}' is not a valid code. See codes options above."
+                            f"\033[31mError: '{code}' is not a valid code. See codes options above.\033[0m"
                         )
                 elif opt == "e":
                     # Toggle encryption
                     encrypt = not encrypt
-                    click.echo(f"Encryption set to {encrypt}")
+                    click.echo(f"\033[33mEncryption set to {encrypt}\033[0m")
                 elif opt == "":
                     # Resume encoding, exit options mode loop
-                    click.echo("Resuming encoding...")
+                    click.echo("\033[32mResuming encoding...\033[0m")
                     break
                 else:
                     click.echo(
-                        "Invalid option. 'c' for code, 'e' for encryption, or 'ENTER' to resume."
+                        "\033[31mInvalid option. 'c' for code, 'e' for encryption, or 'ENTER' to resume.\033[0m"
                     )
         else:
             # Interactive message encoding
