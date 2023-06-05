@@ -13,19 +13,19 @@ class Natoify:
     Contains the encoders and decoders for NATO phonetic alphabet text messages.
 
     Attributes:
-        codes_by_letter (dict): Dictionary of NATO phonetic code words keyed by letter
-        codes_by_word (dict): Dictionary of NATO phonetic code words keyed by word
-        CODE_LIBRARY (dict): Dictionary of valid code options
-        CODE_LIB_DIR (str): Directory containing code.json files
+        codes_by_letter (dict) : Dictionary of NATO phonetic code words keyed by letter
+        codes_by_word (dict) : Dictionary of NATO phonetic code words keyed by word
+        CODE_LIBRARY (dict) : Dictionary of valid code options
+        CODE_LIB_DIR (str) : Directory containing code.json files
 
     Methods:
-        encode(message: str) -> str: Encode a message string to NATO phonetic words
-        decode(message: str) -> str: Decode a NATO message string into plain English
-        encrypt(message: str) -> str: Encrypt after encoding a message to NATO phonetic words
-        decrypt(message: str) -> str: Decrypt an encrypted NATO message
-        set_code(code: str) -> None: Set the code to use for encoding and decoding
-        list_codes() -> list: Generate list of available code libraries
-        load_codes(directory: str) -> None: Loads json code libraries from a directory (default: ../code_lib)
+        encode (message: str) -> str : Encode a message string to NATO phonetic words
+        decode (message: str) -> str : Decode a NATO message string into plain English
+        encrypt (message: str) -> str : Encrypt after encoding a message to NATO phonetic words
+        decrypt (message: str) -> str : Decrypt an encrypted NATO message
+        set_code (code: str) -> None : Set the code to use for encoding and decoding
+        list_codes () -> list : Generate list of available code libraries
+        load_codes (directory: str) -> None : Loads json code libraries from a directory (default: ../code_lib)
 
     Examples:
         >>> nato = Natoify()
@@ -38,9 +38,9 @@ class Natoify:
         >>> nato.encode("Hello World!", encrypt=True)
         'KRAMA'
 
-        >>> nato.set_code("GHETTO")
+        >>> nato.set_code("REDNECK")
         >>> nato.encode("Hello World!")
-        'HOTEL ECHO LIMA LIMA OSCAR  WHISKEY OSCAR ROMEO LIMA DELTA EXCLAMARK'
+        'HILLBILLY EYETALIAN LARDASS LARDASS ORNERY  WUZUP ORNERY REDNECK LARDASS DANG OSHIT'
     """
 
     # Get current director and path to code_lib directory

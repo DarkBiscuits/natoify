@@ -33,7 +33,7 @@
     <img src="images/DarkBiscuit.jpg" alt="Logo" width="80" height="80">
   </a>
 
-<h3 align="center">Natoify</h3>
+<h1 align="center">Natoify</h1>
 
   <p align="center">
     Encode and decode plain text messages using the NATO phonetic alphabet (or variants)
@@ -64,23 +64,19 @@
     <li>
       <a href="#getting-started">Getting Started</a>
       <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
         <li><a href="#installation">Installation</a></li>
       </ul>
     </li>
     <li><a href="#usage">Usage</a></li>
-    <li><a href="#roadmap">Roadmap</a></li>
-    <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgments">Acknowledgments</a></li>
   </ol>
 </details>
 
 
 
 <!-- ABOUT THE PROJECT -->
-## About The Project
+# About The Project
 
 [![Natoify: natocli Screen Shot][natocli-screenshot]](https://example.com)
 [![Natoify: natoapp Screen Shot][natoapp-screenshot]](https://example.com)
@@ -126,7 +122,7 @@ platform.
 
 
 
-### Built With
+## Built With
 
 * [![Python][Python]][Python-url]
 * [![VScode][VScode.com]][VScode-url]
@@ -138,7 +134,7 @@ platform.
 
 
 <!-- GETTING STARTED -->
-## Getting Started
+# Getting Started
 
 To use Natoify on cli (after installation via pip):
 * bash
@@ -171,7 +167,7 @@ To run the desktop app:
   natoapp
 ```
 
-## Installation
+# Installation
 
 1. As a python package:
    ```sh
@@ -192,7 +188,7 @@ OR:
 
 
 <!-- USAGE EXAMPLES -->
-## Usage
+# Usage
 
 Basic usage of CLI program (uses "NATO" code library - default):
 * bash
@@ -212,7 +208,7 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 
 
 <!-- LICENSE -->
-## License
+# License
 
 Distributed under the MIT License. See `LICENSE.txt` for more information.
 
@@ -221,7 +217,7 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 
 <!-- CONTACT -->
-## Contact
+# Contact
 
 DarkBiscuits on Github
 

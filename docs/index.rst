@@ -12,7 +12,7 @@ Contents
 
    Overview <README.md>
    API Reference <api>
-   Module Reference <modules>
+   Module Reference <api/modules>
    Requirements <Requirements>
    License <license>
 
