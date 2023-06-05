@@ -137,7 +137,7 @@ class NatoGPT():
 			with open(fpath, 'r') as f:
 				self.all_messages = json.load(f)
 		except json.decoder.JSONDecodeError:
-			messagebox.showerror("Error", "Improperly formated json. Probably a failed final response. Check the file.")
+			messagebox.showerror("Error", "Improperly formatted json. Probably a failed final response. Check the file.")
 			return
 
 		# Load the all_messages list and reduce the messages list if necessary

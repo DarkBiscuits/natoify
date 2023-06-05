@@ -6,6 +6,7 @@ import html
 import json
 import glob
 import os
+from tkinter import messagebox
 
 
 class Natoify:
@@ -142,16 +143,20 @@ class Natoify:
             raise FileNotFoundError(f"No code.json files found in: {directory}")
 
         # Iterate through each file and load the codes
-        for json_file in json_files:
-            with open(json_file, "r") as f:
-                codes = json.load(f)
-                # Check if the file contains a valid code library
-                # TODO: Add more validation
+        try:
+            for json_file in json_files:
+                with open(json_file, "r") as f:
+                    codes = json.load(f)
+                    # Check if the file contains a valid code library
+                    # TODO: Add more validation
 
-                # Check for duplicate code names
-                if not codes.keys() <= self.CODE_LIBRARY.keys():
-                    # Add the code to the CODE_LIBRARY dictionary
-                    self.CODE_LIBRARY.update(codes)
+                    # Check for duplicate code names
+                    if not codes.keys() <= self.CODE_LIBRARY.keys():
+                        # Add the code to the CODE_LIBRARY dictionary
+                        self.CODE_LIBRARY.update(codes)
+        except json.decoder.JSONDecodeError:
+            messagebox.showerror("Error", "Improperly formatted json code library. Check the files.")
+            return
         
         # Set the code library to NATO or the first code in the library
         self.reset_current_code()
