@@ -4,12 +4,7 @@ import sys
 import os
 import pytest
 
-module_path = os.path.abspath(os.path.join('.'))
-if module_path not in sys.path:
-    sys.path.append(module_path)
-# print(module_path)
-
-from natoify.natoify import Natoify
+from natoify import Natoify
 
 nato = Natoify()
 
