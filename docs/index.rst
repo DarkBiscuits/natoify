@@ -13,8 +13,6 @@ Contents
    Overview <README.md>
    API Reference <api>
    Module Reference <api/modules>
-   CLI Reference <docs/natocli>
-   Desktop App Reference <docs/natoapp>
    Requirements <Requirements>
    License <license>
 
