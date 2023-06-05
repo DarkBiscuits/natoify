@@ -615,6 +615,10 @@ class NatoEngine():
         self.current_code = self.nato.current_code
 
 
-# Show the main window
-app = NatoApp()
-app.mainloop()
+def run():
+    """ Run the main application. """
+    app = NatoApp()
+    app.mainloop()
+
+if __name__ == "__main__":
+    run()

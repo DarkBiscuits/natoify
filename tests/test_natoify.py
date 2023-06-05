@@ -20,7 +20,7 @@ nato_out_lower = "tango hotel india sierra  india sierra  alfa  tango echo sierr
 nato_out_encrypt = "APAP RACSO OGNAT ARREIS  POTS RUOF EERHT OWT ENO  POTS OHCE FLOG AFLA ARREIS ARREIS OHCE EKIM  OGNAT ARREIS OHCE OGNAT  AFLA  ARREIS AIDNI  ARREIS AIDNI LETOH OGNAT"
 symb_output = "EXCLAMARK AT HASHTAG DOLLARSIGN PERCENT CARET AMPERSAND ASTERISK LEFTPAREN RIGHTPAREN UNDERSCORE PLUS EQUAL DASH APOSTROPHE QUOTMARK COLON SEMICOLON QUESTMARK SLASH POINT COMMA GREATERTHAN LESSTHAN BACKSLASH PIPE BACKTICK TILDE LEFTSQUARE RIGHTSQUARE LEFTCURLY RIGHTCURLY"
 numb_output = "ONE TWO THREE FOUR FIVE  SIX SEVEN EIGHT NINE ZERO"
-vulgar_output = "HOE EATME LAMEASS LAMEASS ORFICE  WANKER ORFICE RIMJOB LAMEASS DOUCHBAG OSHIT"
+vulgar_output = "HOE EATME LAMEASS LAMEASS OHSNAP  WHODAT OHSNAP RIMJOB LAMEASS DOUCHBAG OSHIT"
 
 def test_nato_encode():
     """Test the encode function
@@ -170,7 +170,7 @@ def test_nato_decode_unencoded():
     # Test message
     nato_message = "HELLO WORLD!"
     message = nato.decode(nato_message)
-    assert message == ""
+    assert message == "ERROR: Message was either not NATOIFY encoded or code library was not set correctly"
 
 def test_nato_wrong_code_lib():
     """Test if setting a non-existent code library resets to default (nato)
