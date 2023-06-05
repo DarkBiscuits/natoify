@@ -44,7 +44,6 @@ Examples:
 
 import click
 
-# import natocore.engine as engine
 from natoify import Natoify
 
 
