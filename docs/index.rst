@@ -4,38 +4,68 @@ natoify
 
 This is the documentation of **natoify**.
 
-.. note::
-
-    This is the main page of your project's `Sphinx`_ documentation.
-    It is formatted in `reStructuredText`_. Add additional pages
-    by creating rst-files in ``docs`` and adding them to the `toctree`_ below.
-    Use then `references`_ in order to link them from this page, e.g.
-    :ref:`authors` and :ref:`changes`.
-
-    It is also possible to refer to the documentation of other Python packages
-    with the `Python domain syntax`_. By default you can reference the
-    documentation of `Sphinx`_, `Python`_, `NumPy`_, `SciPy`_, `matplotlib`_,
-    `Pandas`_, `Scikit-Learn`_. You can add more by extending the
-    ``intersphinx_mapping`` in your Sphinx's ``conf.py``.
-
-    The pretty useful extension `autodoc`_ is activated by default and lets
-    you include documentation from docstrings. Docstrings can be written in
-    `Google style`_ (recommended!), `NumPy style`_ and `classical style`_.
-
-
 Contents
 ========
 
 .. toctree::
    :maxdepth: 2
 
-   Overview <readme>
-   Contributions & Help <contributing>
-   License <license>
-   Authors <authors>
-   Changelog <changelog>
+   Overview <README.md>
+   API Reference <api>
    Module Reference <api/modules>
+   Requirements <requirements>
+   License <license>
 
+Overview
+--------
+.. note::
+
+    What started as a simple coding challenge while taking a basic Python course has 
+gone horribly (wonderfully) wrong...thanks to Github Copilot and chatGPT. AI tools
+made it easy to continue building out a simple script into a full blown program, 
+complete with cli interface and windowed desktop app. What does it do?
+
+Natoify encodes/decodes plain text messages using a NATO-style phonetic alphabet as a key.
+In standard NATO speak: A=ALFA, B=BRAVO, C=CHARLIE, D=DELTA, etc. 
+Each letter in the message is matched to its corresponding word from the selected
+code library and it then outputs an encoded message in plain text. Decoding a message, the
+text is searched for matching code words and they are replaced with the proper letter
+(or number/punctuation). Encoding results in a message with no special characters or
+numbers, only uppercase letters in the form of groups of words. Decoding reveals the
+original message, complete with numbers and special characters.
+
+This python package includes the basic encoder and decoder (engine.py) along
+with a cli program (natocli.py) and a desktop app (natoapp.py) based on the
+customtkinter library (cross-platform).
+
+See the :doc:`README` for more information.
+
+.. Image:: images/natocli-screenshot.png
+   
+.. Image:: images/natoapp-screenshot.png
+
+Quick Reference
+------------------------
+
+Installation.
+
+.. code-block:: console  
+   
+   pip install natoify
+
+Run Natoify on CLI (using the default code library "NATO").
+
+.. code-block:: console  
+   
+   natocli -m message.txt -o output.txt
+
+Run Natoify as a desktop app.
+
+.. code-block:: console  
+   
+   natoapp
+
+See the :doc:`README` for more information.
 
 Indices and tables
 ==================
@@ -44,18 +74,3 @@ Indices and tables
 * :ref:`modindex`
 * :ref:`search`
 
-.. _toctree: https://www.sphinx-doc.org/en/master/usage/restructuredtext/directives.html
-.. _reStructuredText: https://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html
-.. _references: https://www.sphinx-doc.org/en/stable/markup/inline.html
-.. _Python domain syntax: https://www.sphinx-doc.org/en/master/usage/restructuredtext/domains.html#the-python-domain
-.. _Sphinx: https://www.sphinx-doc.org/
-.. _Python: https://docs.python.org/
-.. _Numpy: https://numpy.org/doc/stable
-.. _SciPy: https://docs.scipy.org/doc/scipy/reference/
-.. _matplotlib: https://matplotlib.org/contents.html#
-.. _Pandas: https://pandas.pydata.org/pandas-docs/stable
-.. _Scikit-Learn: https://scikit-learn.org/stable
-.. _autodoc: https://www.sphinx-doc.org/en/master/ext/autodoc.html
-.. _Google style: https://google.github.io/styleguide/pyguide.html#38-comments-and-docstrings
-.. _NumPy style: https://numpydoc.readthedocs.io/en/latest/format.html
-.. _classical style: https://www.sphinx-doc.org/en/master/domains.html#info-field-lists

@@ -1,0 +1,4 @@
+Requirements
+============
+
+.. literalinclude:: ../requirements.txt

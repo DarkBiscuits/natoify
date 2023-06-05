@@ -1,2 +1,7 @@
 .. _readme:
-.. include:: ../README.rst
+
+README
+======
+
+.. include:: ../README.md
+   :parser: myst_parser.sphinx_
