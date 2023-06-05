@@ -32,7 +32,13 @@ class NatoGPT():
 	"""
 
 	def __init__(self, api_key: str):
-		# Get current director and path to code_lib directory
+		'''Get current directory and path to code_lib directory. 
+		Set the api key and system message storage.
+		
+		Args:
+			api_key (str): The api key for the openai api.
+
+		'''
 		CURRENT_DIR = os.path.dirname(os.path.realpath(__file__))
 		self.CHAT_LOG_DIR = os.path.join(CURRENT_DIR, "../chat_log")
 
@@ -43,13 +49,25 @@ class NatoGPT():
 		self.current_tokens = 0
 	
 	def set_new_session(self) -> None:
+		"""Set defaults for a new chat session."""
+
 		self.messages = [ {"role": "system", "content":
 					"You are a intelligent, friendly, and funny assistant."} ]
 		self.all_messages.append(self.messages[0])
 		self.default_msg_len = len(self.messages)
 		
 	def add_to_chat(self, message: str) -> Tuple[str, str]:
-		"""Send message to chatGPT and return the reply."""
+		"""Send message to chatGPT and return the reply.
+		
+		Args:
+			message (str): The message to send to chatGPT (prompt).
+
+		Returns:	
+			prompt (str): The message sent to chatGPT.
+			reply (str): The reply from chatGPT.
+		
+		"""
+
 		prompt = message
 		
 		if message:
@@ -86,6 +104,7 @@ class NatoGPT():
 		It will be saved as chat_<date-time>.json if a
 		chat session has occurred.
 		"""
+
 		# Check if a chat session has occurred, if not, return
 		if len(self.all_messages) == self.default_msg_len:
 			return
@@ -100,7 +119,15 @@ class NatoGPT():
 			json.dump(self.all_messages, f, indent=4)
 
 	def load_chat_log(self, chat_log: str) -> str:
-		"""Load a chat log by name from the chat_log directory."""
+		"""Load a chat log by name from the chat_log directory.
+		
+		Args:
+			chat_log (str): The name of the chat log to load.
+			
+		Returns:
+			chat_log (str): All messages in the chat log as a single string.
+		
+		"""
 
 		# Get the path to the chat log
 		fpath = os.path.join(self.CHAT_LOG_DIR, chat_log)
@@ -142,14 +169,28 @@ class NatoGPT():
 		return messages
 
 	def get_chat_logs(self) -> list:
-		"""Get a list of all chat logs in the chat_log directory."""
+		"""Get a list of all chat logs in the chat_log directory.
+		
+		Returns:
+			chat_logs (list): A list of all chat logs in the chat_log directory.
+		
+		"""
 
 		# Get the path to the chat log
 		chat_files = glob.glob(f"{self.CHAT_LOG_DIR}/*.json")
 		return sorted(chat_files, key=os.path.getmtime, reverse=True)
 	
 	def num_tokens_from_messages(self, messages, model="gpt-3.5-turbo-0301"):
-		"""Returns the number of tokens used by a list of messages."""
+		"""Returns the number of tokens used by a list of messages.
+		
+		Args:
+			messages (list): A list of messages.
+			model (str): The model to use for tokenization. (default: "gpt-3.5-turbo-0301")
+
+		Returns:
+			num_tokens (int): The number of tokens that will be used by the messages.
+
+		"""
 		try:
 			encoding = tiktoken.encoding_for_model(model)
 		except KeyError:

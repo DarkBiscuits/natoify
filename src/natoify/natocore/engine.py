@@ -21,7 +21,7 @@ class Natoify:
     Methods:
         encode(message: str) -> str: Encode a message string to NATO phonetic words
         decode(message: str) -> str: Decode a NATO message string into plain English
-        encrpyt(message: str) -> str: Encrypt after encoding a message to NATO phonetic words
+        encrypt(message: str) -> str: Encrypt after encoding a message to NATO phonetic words
         decrypt(message: str) -> str: Decrypt an encrypted NATO message
         set_code(code: str) -> None: Set the code to use for encoding and decoding
         list_codes() -> list: Generate list of available code libraries
@@ -50,6 +50,8 @@ class Natoify:
     CODE_LIBRARY = {}
 
     def __init__(self):
+        """Load the default codes (also sets current code to prevent errors - Default is NATO)."""
+
         self.codes_by_letter = {}
         self.current_code = ""
         # Load the default codes (also sets current code to prevent errors - Default is NATO)
@@ -59,14 +61,32 @@ class Natoify:
 
     def _codes_by_word(self, codes_by_letter: dict) -> dict:
         """
-        Returns the reverse of the key, value pairs in codes_by_letter for decode lookup.
+        Returns the reverse of the key, value pairs in codes_by_letter for 
+        simplified decode lookup.
+
+        Args:
+            codes_by_letter (dict): Dictionary of NATO phonetic code words keyed by letter
+
+        Returns:
+            codes_by_word (dict): Dictionary of NATO phonetic code words keyed by word
+    
         """
+
         by_words = {value: key for (key, value) in codes_by_letter.items()}
         by_words["STOP"] = "."
         return by_words
 
     def _ultimately_unescape(self, s: str) -> str:
-        """A relentless loop for cleaning out web encoding from a string."""
+        """A relentless loop for cleaning out web encoding from a string.
+        
+        Args:
+            s (str): The string to clean up
+
+        Returns:
+            s (str): The cleaned up string
+        
+        """
+
         unescaped = ""
         while unescaped != s:
             s = html.unescape(s)
@@ -77,7 +97,15 @@ class Natoify:
         """
         Cleans up a message string before encoding or decoding.
         Attempts to remove any web encoding and non-ascii characters.
+
+        Args:
+            message (str): The message to clean up
+
+        Returns:
+            cleaned (str): The cleaned up message
+        
         """
+
         cleaned = message.strip()
         # Try removing web encoding
         message = self._ultimately_unescape(message)
@@ -99,8 +127,9 @@ class Natoify:
             >>> nato = Natoify()
             >>> nato.load_codes("../code_lib")
             >>> nato.list_codes()
-            ['NATO', 'GHETTO', 'REDNECK', 'POTTER', 'STARWARS']
+            ['NATO', 'GHETTO', 'REDNECK', 'HARRYPOTTER', 'STARWARS']
         """
+
         # Check if directory is empty
         if directory == "":
             directory = self.CODE_LIB_DIR
@@ -128,15 +157,23 @@ class Natoify:
         self.reset_current_code()
 
     def reset_current_code(self) -> None:
-        # Set the code to the first code in the library
-        # if NATO is not available (user set custom directory)
+        """Set the code to the first code in the library 
+        if NATO is not available (user set custom directory)
+        """
+
         if "NATO" not in self.CODE_LIBRARY.keys():
             self.set_code(self.list_codes()[0])
         else:
             self.set_code("NATO")
 
     def list_codes(self) -> list:
-        """Generate list of available code library names"""
+        """Generate list of available code library names
+        
+        Returns:
+            c_list (list): List of available code library names
+        
+        """
+
         c_list = [code for code in self.CODE_LIBRARY.keys()]
         c_list.sort()
         return c_list
@@ -158,6 +195,7 @@ class Natoify:
             >>> nato.encode("Hello World!")
             'HOTEL ECHO LIMA LIMA OSCAR  WHISKEY OSCAR ROMEO LIMA DELTA EXCLAMARK'
         """
+
         code = code.upper()
         if code not in self.CODE_LIBRARY.keys():
             self.reset_current_code()
@@ -168,7 +206,21 @@ class Natoify:
             self.current_code = code
 
     def encode(self, message: str, encrypt: bool = False) -> str:
-        """Encode a message string to NATO phonetic words"""
+        """Encode a message string to NATO phonetic words. Code used
+        is stored in self.current_code.
+        
+        Args:
+            message (str): The message to encode
+            encrypt (bool): Encrypt the message after encoding. Defaults to False
+
+        Raises:
+            ValueError: If message is empty or None
+
+        Examples:
+            >>> nato = Natoify()
+            >>> nato.encode("Hello World!")
+            'HOTEL ECHO LIMA LIMA OSCAR  WHISKEY OSCAR ROMEO LIMA DELTA EXCLAMARK'
+        """
 
         # Catch empty message
         if message == "" or message == None:
@@ -210,13 +262,27 @@ class Natoify:
         return nato_message
 
     def decode(self, message: str, decrypt: bool = False) -> str:
-        """Decode a NATO message string into plain English.
+        """Decode a NATO message string into plain English. Code used
+        is stored in self.current_code.
 
         If message was not encoded or incorrect code library is set,
-        it will return an empty string or a few random words that matched.
+        it will return a error string or a few random words that matched.
 
-        :TODO: Add a check for the code library used to encode the message.
-        Make it fail early if it doesn't match the current code library.
+        Args:
+            message (str): The message to decode
+            decrypt (bool, optional): Decrypt the message before decoding. Defaults to False.
+
+        Raises: 
+            ValueError: If message is empty or None
+
+        Returns:
+            str: The decoded message
+
+        Examples:
+            >>> nato = Natoify()
+            >>> nato.set_code("NATO")
+            >>> nato.decode("HOTEL ECHO LIMA LIMA OSCAR  WHISKEY OSCAR ROMEO LIMA DELTA EXCLAMARK")
+            'HELLO WORLD!'
         """
 
         # Catch empty message
@@ -276,14 +342,14 @@ class Natoify:
 
     def encrypt(self, message: str) -> str:
         """Encrypt a message by reversing the message string
-        TODO: Add a real encryption method
+        TODO - Add a real encryption method
         """
         msg = message[::-1]
         return msg
 
     def decrypt(self, message: str) -> str:
         """Decrypt a message by reversing the message string
-        TODO: Add a real decryption method
+        TODO - Add a real decryption method
         """
         msg = message[::-1]
         return msg

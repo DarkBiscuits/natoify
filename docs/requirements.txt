@@ -5,4 +5,4 @@ sphinx>=3.2.1
 sphinx_rtd_theme
 myst_parser
 sphinx_rtd_theme
-sphinx_click.ext
+sphinx_click

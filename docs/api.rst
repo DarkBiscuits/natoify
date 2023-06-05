@@ -5,7 +5,8 @@ API
    :toctree: docs
    
    natoify
-   natoify.engine
-   natoify.natogpt
    natoapp
    natocli
+   natoify.natocore
+   natoify.natocore.engine
+   natoify.natocore.natogpt
