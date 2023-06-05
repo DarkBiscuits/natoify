@@ -2,7 +2,7 @@
 Command line interface for natoify
 
 Usage:
-    natoify [OPTIONS]
+    natocli [OPTIONS]
 
 Options:    
     -m, --message FILENAME   Message filename (or '-' to read from stdin)
@@ -44,7 +44,7 @@ Examples:
 
 import click
 
-from natoify.engine import Natoify
+from natocore.engine import Natoify
 
 
 def show_codes(nato: Natoify) -> None:

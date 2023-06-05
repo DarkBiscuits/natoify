@@ -25,8 +25,8 @@ from tkinter import filedialog, messagebox
 
 import customtkinter as ctk
 
-from natoify.engine import Natoify
-from natoify.natogpt import NatoGPT
+from natocore.engine import Natoify
+from natocore.natogpt import NatoGPT
 
 
 # Constants
