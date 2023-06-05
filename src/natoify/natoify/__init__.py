@@ -10,3 +10,4 @@ included for easy use.
 
 
 from .engine import Natoify
+from .natogpt import NatoGPT
