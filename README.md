@@ -30,7 +30,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/darkbiscuits/natoify">
-    <img src="images/DarkBiscuit.jpg" alt="Logo" width="80" height="80">
+    <img src="_static/DarkBiscuit.jpg" alt="Logo" width="80" height="80">
   </a>
 
 <h1 align="center">Natoify</h1>

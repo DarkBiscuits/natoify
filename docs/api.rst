@@ -8,5 +8,3 @@ API
    natoify.natocore
    natoify.natocore.engine
    natoify.natocore.natogpt
-   natoapp
-   natocli
