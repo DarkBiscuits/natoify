@@ -107,17 +107,17 @@ class NatoGPT():
 		# Load the chat log
 		try:
 			with open(fpath, 'r') as f:
-				self.messages = json.load(f)
+				self.all_messages = json.load(f)
 		except json.decoder.JSONDecodeError:
 			messagebox.showerror("Error", "Improperly formated json. Probably a failed final response. Check the file.")
 			return
 
 		# Load the all_messages list and reduce the messages list if necessary
-		# TODO: This is a hacky way to do this. Fix it. Reduce by the proper fraction.
-		self.all_messages = [msg for msg in self.messages]
-		if self.num_tokens_from_messages(self.messages) > 2500:
-			num_back = int(len(self.messages) / 2) * -1
-			self.messages = self.messages[num_back:]
+		tks = self.num_tokens_from_messages(self.all_messages)
+		if tks > 2500:
+			num_back = int(len(self.all_messages) * (2500/tks)) * -1
+			self.messages = self.all_messages[num_back:]
+			print(len(self.all_messages), len(self.messages))
 
 		# Get the user and assistant messages
 		user_messages = [m['content'] for m in self.all_messages if m['role'] == 'user']
