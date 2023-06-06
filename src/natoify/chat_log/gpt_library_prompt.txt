@@ -1,4 +1,5 @@
 You are a master linguist with an extensive knowledge of words related to specific subjects. Your task is to create variations of the NATO phonetic alphabet where a single letter is matched to a word starting with that letter. For example:  A = ALFA, B = BRAVO, etc. You will create a variation of this pattern, having the words all relate to a theme. For example words relating to StarWars:  A = ALDERAAN , B = BOBAFETT , ect. Words cannot contain spaces so it is acceptable to join short words like in the previous example, BOBAFETT, where that makes sense. Your word choices should be humorous and unique to the theme. You will return the letter:word dictionaries as a properly formatted json object like the following example. Note that you will need to include all the text characters given as keys from the example in your generated json dictionary object. The letters, numbers, and punctuation characters are to be given an appropriate theme word. The last 3 characters are to remain unchanged from the example (' ', '\n', '\t'). Remember to capitalize the theme name with no spaces, for example: NATO or SILLYWORDS. I will give you a single theme and you will generate a NATO-style phonetic dictionary as a properly formatted json object with theme words for the letters, numbers, and punctuation characters and include a descriptive title without spaces. The title and all words are to be capitalized as shown. Let me know when you are ready and I will give you the first theme. Here is the example::
+  
   {
     "NATO": {
         "A": "ALFA",
@@ -24,7 +25,7 @@ You are a master linguist with an extensive knowledge of words related to specif
         "U": "UNIFORM",
         "V": "VICTOR",
         "W": "WHISKEY",
-        "X": "X-RAY",
+        "X": "XRAY",
         "Y": "YANKEE",
         "Z": "ZULU",
         "0": "ZERO",
@@ -74,3 +75,23 @@ You are a master linguist with an extensive knowledge of words related to specif
         "\t": "\t"
     }
 } 
+
+
+---------------------------------------------------------------------------------------------
+# Notes on using this prompt:
+
+ChatGPT will do a great job on the words for a to z. The numbers and special characters...not so much, especially the space, newline, and tab. You will likely have to clean up the following to make sure the dictionary works with Natoify.
+
+1. Remove any spaces between words. Sometimes ChatGPT forgets to do this or will get into a pattern where it forgets one or two and then that pattern grows into 5 or 10 as you make more. Best to end that session and start fresh with the above prompt again.
+2. Fix the space, newline, and tab characters. Often it doesn't take long before they get replaced with words. Return them to ' ', '\n, and '\t' before loading the dictionary into the code_lib. They will crash Natoify upon loading, as will any malformed json (missing commas, brackets, etc).
+3. Ensure that the json is properly formatted as stated above, includes all brackets, braces, and commas.
+4. While not required, to keep in line with the formatting of all other dictionaries, capitalize the title (ChatGPT forgets this sometimes), and all other words, if necessary. Natoify uppercases everything anyway, but it does make them easier to read and modify. I've found that if you give the theme to ChatGPT in the format of the continuation prompt below, it will continue to capitalize everything.
+5. Copy/paste the dictionary from the chat to a text editor (or the code editor tab if working within the natoapp desktop gui), clean up, and save as a json file. No titles, headers, comments, and so on. Just the properly formatted json object. Name it to match the name of the theme: "veganmemes.json" or whatever.
+
+
+## Continuation prompt for generating code libraries:
+
+"The next theme is: the GAMEOFTHRONES tv show"
+
+(or SILLYWORDS or BRUCEWILLIS or SQUISHYLADYPARTS, etc.)
+----------------------------------------------------------------------------------------------
