@@ -16,7 +16,7 @@ class NatoGPT():
 	"""
 	This class is used to chat with chatGPT.
 
-	Attributes:
+	Parameters:
 		CHAT_LOG_DIR (str): The path to the chat log directory.
 		messages (list): A list of messages in the chat session.
 		default_msg_len (int): The default length of the messages list.
@@ -29,6 +29,7 @@ class NatoGPT():
 		get_chat_logs() -> list Get a list of all chat logs in the chat_log directory.
 		num_tokens_from_messages(messages list) -> int: Get the number of tokens in a list of messages.
 	
+	:noindex:
 	"""
 
 	def __init__(self, api_key: str):
@@ -37,7 +38,8 @@ class NatoGPT():
 		
 		Args:
 			api_key (str): The api key for the openai api.
-
+		
+		:noindex:
 		'''
 		CURRENT_DIR = os.path.dirname(os.path.realpath(__file__))
 		self.CHAT_LOG_DIR = os.path.join(CURRENT_DIR, "../chat_log")
@@ -49,7 +51,10 @@ class NatoGPT():
 		self.current_tokens = 0
 	
 	def set_new_session(self) -> None:
-		"""Set defaults for a new chat session."""
+		"""Set defaults for a new chat session.
+		
+		:noindex:
+		"""
 
 		self.messages = [ {"role": "system", "content":
 					"You are a intelligent, friendly, and funny assistant."} ]
@@ -65,7 +70,7 @@ class NatoGPT():
 		Returns:	
 			prompt (str): The message sent to chatGPT.
 			reply (str): The reply from chatGPT.
-		
+		:noindex:
 		"""
 
 		prompt = message
@@ -103,6 +108,7 @@ class NatoGPT():
 		"""Save the chat log to the chat_log directory.
 		It will be saved as chat_<date-time>.json if a
 		chat session has occurred.
+		:noindex:
 		"""
 
 		# Check if a chat session has occurred, if not, return
@@ -126,7 +132,7 @@ class NatoGPT():
 			
 		Returns:
 			chat_log (str): All messages in the chat log as a single string.
-		
+		:noindex:
 		"""
 
 		# Get the path to the chat log
@@ -173,7 +179,7 @@ class NatoGPT():
 		
 		Returns:
 			chat_logs (list): A list of all chat logs in the chat_log directory.
-		
+		:noindex:
 		"""
 
 		# Get the path to the chat log

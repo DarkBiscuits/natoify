@@ -23,3 +23,4 @@ finally:
 from .natocore.engine import Natoify
 from .natocore.natogpt import NatoGPT
 
+__version__ = "0.1.5"

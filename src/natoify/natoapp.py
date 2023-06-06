@@ -38,7 +38,7 @@ THEME_COLORS = ["blue", "dark-blue", "green"]
 class NatoApp(ctk.CTk):
     """ The main application class for natoify. 
     
-    Attributes:
+    Parameters:
         nato_eng (NatoEngine): The engine used to convert text to NATO phonetic alphabet.
         decode (bool): Whether to decode the text or not.
         encrypt (int): The encryption level to use.

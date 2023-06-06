@@ -3,7 +3,7 @@ API
 
 .. autosummary::
    :toctree: docs
-   
+
    natoify
    natoify.natocli
    natoify.natoapp

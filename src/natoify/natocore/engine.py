@@ -14,7 +14,7 @@ class Natoify:
     """
     Contains the encoders and decoders for NATO phonetic alphabet text messages.
 
-    Attributes:
+    Parameters:
         codes_by_letter (dict) : Dictionary of NATO phonetic code words keyed by letter
         codes_by_word (dict) : Dictionary of NATO phonetic code words keyed by word
         CODE_LIBRARY (dict) : Dictionary of valid code options
