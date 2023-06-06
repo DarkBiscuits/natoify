@@ -196,7 +196,7 @@ To run the desktop app:
 <!-- LICENSE -->
 # License
 
-Distributed under the MIT License. See `LICENSE.txt` for more information.
+Distributed under the MIT License. See [LICENSE](license.rst) for more information.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 

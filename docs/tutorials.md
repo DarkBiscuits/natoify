@@ -4,7 +4,7 @@
 
 Most of what you need to know can be found in the cli help (`--help`).
 
-Basic usage is described in the [README](README.rst). One thing to note is that it's set up to take in a stream from stdin, like piping | a programs output into natocli. Because of this, if you run it without any options or args, it can seem to hang as it's waiting for input. Ctrl+D(CMD+D) will break you out of the waiting loop.
+Basic usage is described in the [README](README.rst). One thing to note is that it's set up to take in a stream from stdin, like piping | a program output into natocli. Because of this, if you run it without any options or args, it can seem to hang as it's waiting for input. Ctrl+D(CMD+D) will break you out of the waiting loop.
 ```sh
   natocli    # no options or args ctrl(cmd)+D to quit
 ```
@@ -86,7 +86,7 @@ The playground is where you type into the entry area (#5) and press enter. This 
 4. Save Chat Log. As described above. Saves a json file that can be loaded later from #7 to continue a conversation.
 5. Text entry area.
 6. Enter button. Executes encoding/decoding or sends prompt to ChatGPT.
-7. Chat Session Selector. Saved sessions can be reloaded for review or continued. Note that as sessions get longer, they must be truncated to stay within the token limit of our chatty buddy. Saving and loading sessions with #4 and #7 stores the complete session which is then truncated in the background to continue a chat. At any time you can use the Save File button in the upper left to save the contents any active tab's text area to a directory of your choosing. The chat selector and save chat log maintain the json version of a session behind the scenes.
+7. Chat Session Selector. Saved sessions can be reloaded for review or continued. Note that as sessions get longer, they must be truncated to stay within the token limit of our chatty buddy. Saving and loading sessions with #4 and #7 stores the complete session which is then truncated in the background to continue a chat. At any time you can use the Save File button in the upper left to save the contents of any active tab's text area to a directory of your choosing. The chat selector and save chat log maintain the json version of a session behind the scenes.
 
 
 ![Natoapp screenshot](_static/natoapp_3.jpg)
