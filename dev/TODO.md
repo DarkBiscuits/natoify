@@ -21,7 +21,7 @@
  - Create desktop app using customtkinter
    - can open a text file, cut/paste into text area, or type in place
    - button to select file with filebrowser
-   - entry/filebrowser to set saveing dir path and filename
+   - entry/filebrowser to set saving dir path and filename
    - buttons for encoding and decoding
    - can test encoding/decoding without saving to file
    - checkbox to toggle encryption/decryption off/on
@@ -29,7 +29,7 @@
 
  - Create a code language loader
    - Load code dictionaries from text files in package folder - /codes
-   - NATO and VULGAR remain embeded in .codes as defaults
+   - NATO and GHETTO remain embedded in .codes as defaults
    - method to load, verify, and store additional codes from /codes
    - adds code types to existing CODE_OPTIONS attribute for use
    - codes are loaded as python dictionaries into a main dictionary
