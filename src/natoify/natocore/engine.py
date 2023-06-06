@@ -393,3 +393,8 @@ class Natoify:
             # Append the encrypted letter to the ciphertext
             ciphertext += encrypted_letter
         return ciphertext
+
+if __name__ == "__main__":
+    nato = Natoify()
+    nato.set_code("NATO")
+    nato.decode("JHBGXER BSVOE KCZEH YIFO DXZGA GGOI", decrypt=True)
