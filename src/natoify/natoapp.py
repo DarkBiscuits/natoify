@@ -30,7 +30,7 @@ from natoify import NatoGPT
 
 
 # Constants
-__version__ = "0.1.0"
+__version__ = "0.1.5"
 THEME_COLORS = ["blue", "dark-blue", "green"]
 
 # Classes
