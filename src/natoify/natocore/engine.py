@@ -6,6 +6,7 @@ import html
 import json
 import glob
 import os
+import string
 from tkinter import messagebox
 
 
@@ -341,20 +342,54 @@ class Natoify:
 
         # Check for empty message
         if decoded_msg == "":
-            decoded_msg = "ERROR: Message was either not NATOIFY encoded or code library was not set correctly"
+            decoded_msg = "ERROR: Message was either not NATOIFY encoded, is encrypted, or code library is incorrect."
 
         return decoded_msg
 
     def encrypt(self, message: str) -> str:
         """Encrypt a message by reversing the message string
-        TODO - Add a real encryption method
         """
-        msg = message[::-1]
-        return msg
+        enc_msg = self.vigenere_cipher(message, self.current_code, encrypt=True)
+        return enc_msg
 
     def decrypt(self, message: str) -> str:
         """Decrypt a message by reversing the message string
-        TODO - Add a real decryption method
         """
-        msg = message[::-1]
-        return msg
+        dec_msg = self.vigenere_cipher(message, self.current_code, encrypt=False)
+        return dec_msg
+
+    def vigenere_cipher(self, message: str, key: str, encrypt: bool) -> str:
+        """Encrypt or decrypt a message using the Vigenere cipher.
+        
+        Args:
+            message (str): The message to encrypt or decrypt
+            key (str): The key to use for encryption or decryption
+            encrypt (bool): Encrypt the message if True, decrypt if False
+
+        Returns:
+            str: The encrypted or decrypted message
+
+        """
+
+        ciphertext = ""
+        for i in range(len(message)):
+            # Check if character is a space and add it to the ciphertext
+            if message[i] == " ":
+                ciphertext += " "
+                continue
+            # Find the index of the letter in the message
+            message_index = string.ascii_uppercase.find(message[i])
+            # Find the index of the letter in the key
+            key_index = string.ascii_uppercase.find(key[i % len(key)])
+            
+            # Calculate the encryption value
+            if encrypt:
+                encryption_value = (message_index + key_index) % 26
+            else:
+                encryption_value = (message_index - key_index) % 26
+            
+            # Convert the encryption value to a letter
+            encrypted_letter = string.ascii_uppercase[encryption_value]
+            # Append the encrypted letter to the ciphertext
+            ciphertext += encrypted_letter
+        return ciphertext
