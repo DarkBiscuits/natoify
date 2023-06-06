@@ -118,3 +118,42 @@
 - killbill
 - jackreacher
 - johnwick
+
+## Old Readme Text
+
+What started as a simple coding challenge while taking a basic Python course has 
+gone horribly wrong...thanks to Github Copilot and chatGPT. AI tools
+made it easy to continue building out a simple script into a full blown program, 
+complete with cli interface and windowed desktop app. What does it do?
+
+Natoify encodes/decodes plain text messages using a NATO-style phonetic alphabet as a key.
+In standard NATO speak: A=ALFA, B=BRAVO, C=CHARLIE, D=DELTA, etc. 
+Each letter in the message is matched to its corresponding word from the selected
+code library and it then outputs an encoded message in plain text. Decoding a message, the
+text is searched for matching code words and they are replaced with the proper letter
+(or number/punctuation). Encoding results in a message with no special characters or
+numbers, only uppercase letters in the form of groups of words. Decoding reveals the
+original message, complete with numbers and special characters.
+
+This python package includes the basic encoder and decoder (engine.py) along
+with a cli program (natocli.py) and a desktop app (natoapp.py) based on the
+customtkinter library (cross-platform).
+
+The cli program allows you to specify an input text file and an output text file for
+the resulting encoded or decoded message. It has some utility options to list 
+available code libraries, set a specific code library for encoding/decoding, 
+encrypt/decrypt in addition to encoding/decoding, and a repl loop allowing you
+to experiment by typing text to input and seeing the resulting output immediately, along with
+the ability to switch code libraries and toggle encryption as you go. Great for playing with
+options before passing files through. Running it as a chain in your favorite shell
+also lets you to omit the input, output, or both, allowing it to be used to pipe (|) 
+cli output to/from other programs through it for conversion.
+
+The desktop app allows you to load a text message, choose a code library, toggle 
+encoding/decoding/encryption/decryption options, and view the result. You can load and 
+install additional code libraries as well. The playground tab gives you a place to play 
+with typing input text and immediately viewing the output, encode a word or sentence using 
+all available code libraries at once for comparison (and as a way to see the results of all libraries), and even includes a GPT mode where you can chat with chatGPT (3.5 turbo). GPT was used to generate almost all the included libraries (113 at last count) and is great for creating a code library based on your own custom theme. There is also a code editor tab where code
+library files can be loaded, edited, copies saved, etc. The desktop app is built using
+customtkinter, a modern styled gui framework based on tkinter, and should work on any
+platform.

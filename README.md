@@ -29,7 +29,7 @@
 <h1 align="center">Natoify</h1>
 
   <p align="center">
-    Encode and decode plain text messages using the NATO phonetic alphabet (or variants)
+    Encode and decode plain text messages using the NATO phonetic alphabet (and others...)
     <br />
     <a href="https://github.com/darkbiscuits/natoify"><strong>Explore the docs »</strong></a>
     <br />
@@ -76,42 +76,11 @@
 
 ![Natoify: natoapp Screen Shot][natoapp-screenshot]
 
-What started as a simple coding challenge while taking a basic Python course has 
-gone horribly wrong...thanks to Github Copilot and chatGPT. AI tools
-made it easy to continue building out a simple script into a full blown program, 
-complete with cli interface and windowed desktop app. What does it do?
+In the twisted world where learning Python coding and late-night junk food binges merge, things got out of hand. I blame Github Copilot and ChatGPT. These AI delinquents morphed a humble script into a full-fledged program, decked out with a CLI and a desktop app. And the result? A cryptic cabaret called "Natoify."
 
-Natoify encodes/decodes plain text messages using a NATO-style phonetic alphabet as a key.
-In standard NATO speak: A=ALFA, B=BRAVO, C=CHARLIE, D=DELTA, etc. 
-Each letter in the message is matched to its corresponding word from the selected
-code library and it then outputs an encoded message in plain text. Decoding a message, the
-text is searched for matching code words and they are replaced with the proper letter
-(or number/punctuation). Encoding results in a message with no special characters or
-numbers, only uppercase letters in the form of groups of words. Decoding reveals the
-original message, complete with numbers and special characters.
+Natoify is the tongue-twisting lovechild of the NATO phonetic alphabet and a magic 8-ball. It takes your mundane messages and codes 'em using the NATO alphabet, transforming 'A' into 'ALFA', 'B' into 'BRAVO', and so on. Your once readable message is now a linguistic labyrinth of code words. Want to turn back the gibberish? Just feed it back to Natoify, and voila, you get your original message, digits, and doodads intact. And NATO is not the only way to fly. There are more...many, many more ways to play such as STARWARS, JOHNWICK, HARRYPOTTER, SOUTHPARK, and REDNECK. More than a hundred, last I checked, due to ChatGPT's enthusiasm.
 
-This python package includes the basic encoder and decoder (engine.py) along
-with a cli program (natocli.py) and a desktop app (natoapp.py) based on the
-customtkinter library (cross-platform).
-
-The cli program allows you to specify an input text file and an output text file for
-the resulting encoded or decoded message. It has some utility options to list 
-available code libraries, set a specific code library for encoding/decoding, 
-encrypt/decrypt in addition to encoding/decoding, and a repl loop allowing you
-to experiment by typing text to input and seeing the resulting output immediately, along with
-the ability to switch code libraries and toggle encryption as you go. Great for playing with
-options before passing files through. Running it as a chain in your favorite shell
-also lets you to omit the input, output, or both, allowing it to be used to pipe (|) 
-cli output to/from other programs through it for conversion.
-
-The desktop app allows you to load a text message, choose a code library, toggle 
-encoding/decoding/encryption/decryption options, and view the result. You can load and 
-install additional code libraries as well. The playground tab gives you a place to play 
-with typing input text and immediately viewing the output, encode a word or sentence using 
-all available code libraries at once for comparison (and as a way to see the results of all libraries), and even includes a GPT mode where you can chat with chatGPT (3.5 turbo). GPT was used to generate almost all the included libraries (113 at last count) and is great for creating a code library based on your own custom theme. There is also a code editor tab where code
-library files can be loaded, edited, copies saved, etc. The desktop app is built using
-customtkinter, a modern styled gui framework based on tkinter, and should work on any
-platform.
+The package comes with the essentials: an encoder and decoder, a CLI, and a desktop app. The CLI lets you play God with your text files, encoding, decoding, encrypting, and decrypting to your heart's content. It's like a Swiss army knife for text manipulation. For those who prefer a fancier toy, the desktop app provides a slick playground to experiment with your text, allowing for on-the-fly encoding, decoding, and even some chit-chat with our AI buddy, ChatGPT 3.5 turbo. The app is built with customtkinter, a nifty GUI framework, so it's ready to rock 'n roll on any platform. So, brace yourself for some NATO-style fun!
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -128,40 +97,6 @@ platform.
 
 
 
-<!-- GETTING STARTED -->
-# Getting Started
-
-To use Natoify on cli (after installation via pip):
-* bash
-```sh
-  natocli -m message.txt -o encoded.txt  # uses NATO library - default
-```
-or use to encode output from other cli programs:
-* bash
-```sh
-  ls | natocli -o encoded.txt -c "REDNECK"
-```
-having a rough day and need a giggle, try this:
-* bash
-```sh
-  head file_giving_me_headaches.py | natocli -c "GHETTO"
-```
-To see all available code libraries use `-l` or `--list-codes` (or use `--help` for a list of all options):
-* bash
-```sh
-  natocli --list-codes
-```
-To run in interactive mode use `-r` or `--repl`:
-* bash
-```sh
-  natocli -r
-```
-To run the desktop app:
-* bash
-```sh
-  natoapp
-```
-
 # Installation
 
 1. As a python package:
@@ -169,7 +104,7 @@ To run the desktop app:
    pip install natoify
    ```
 OR:
-1. Or clone the repo:
+1. Clone the repo (or download the zip):
    ```sh
    git clone 'https://github.com/darkbiscuits/natoify.git'
    ```
@@ -200,6 +135,40 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+
+<!-- GETTING STARTED -->
+# Getting Started
+
+To use Natoify on cli (after installation via pip):
+* bash
+```sh
+  natocli -m message.txt -o encoded.txt  # uses NATO library - default
+```
+Or use to encode output from other cli programs:
+* bash
+```sh
+  ls | natocli -o encoded.txt -c "REDNECK"
+```
+Having a rough day and need a giggle, try this:
+* bash
+```sh
+  head file_giving_me_headaches.py | natocli -c "GHETTO"
+```
+To see all available code libraries use `-l` or `--list-codes` (or use `--help` for a list of all options):
+* bash
+```sh
+  natocli --list-codes
+```
+To run in interactive mode use `-r` or `--repl`:
+* bash
+```sh
+  natocli -r
+```
+To run the desktop app:
+* bash
+```sh
+  natoapp
+```
 
 
 <!-- LICENSE -->
