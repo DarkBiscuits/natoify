@@ -21,13 +21,13 @@ class Natoify:
         CODE_LIB_DIR (str) : Directory containing code.json files
 
     Methods:
-        encode (message: str) -> str : Encode a message string to NATO phonetic words
-        decode (message: str) -> str : Decode a NATO message string into plain English
-        encrypt (message: str) -> str : Encrypt after encoding a message to NATO phonetic words
-        decrypt (message: str) -> str : Decrypt an encrypted NATO message
-        set_code (code: str) -> None : Set the code to use for encoding and decoding
+        encode (message str) -> str : Encode a message string to NATO phonetic words
+        decode (message str) -> str : Decode a NATO message string into plain English
+        encrypt (message str) -> str : Encrypt after encoding a message to NATO phonetic words
+        decrypt (message str) -> str : Decrypt an encrypted NATO message
+        set_code (code str) -> None : Set the code to use for encoding and decoding
         list_codes () -> list : Generate list of available code libraries
-        load_codes (directory: str) -> None : Loads json code libraries from a directory (default: ../code_lib)
+        load_codes (directory str) -> None : Loads json code libraries from a directory (default: ../code_lib)
 
     Examples:
         >>> nato = Natoify()
@@ -38,11 +38,11 @@ class Natoify:
         'HELLO WORLD!'
 
         >>> nato.encode("Hello World!", encrypt=True)
-        'KRAMA'
+        'UOMSY XQUO ZVMT YIFO OLQNR  JHBGXER BSVOE KCZEH YIFO DXZGA SKCEOZAKY'
 
         >>> nato.set_code("REDNECK")
         >>> nato.encode("Hello World!")
-        'HILLBILLY EYETALIAN LARDASS LARDASS ORNERY  WUZUP ORNERY REDNECK LARDASS DANG OSHIT'
+        'HILLBILLY EYETALIAN LARDASS LARDASS ORNERY  WUZUP ORNERY REDNECK LARDASS DANGIT OSHIT'
     """
 
     # Get current director and path to code_lib directory
@@ -347,19 +347,20 @@ class Natoify:
         return decoded_msg
 
     def encrypt(self, message: str) -> str:
-        """Encrypt a message by reversing the message string
+        """Encrypt a message using the Vigenere cipher.
         """
         enc_msg = self.vigenere_cipher(message, self.current_code, encrypt=True)
         return enc_msg
 
     def decrypt(self, message: str) -> str:
-        """Decrypt a message by reversing the message string
+        """Decrypt a message using the Vigenere cipher.
         """
         dec_msg = self.vigenere_cipher(message, self.current_code, encrypt=False)
         return dec_msg
 
     def vigenere_cipher(self, message: str, key: str, encrypt: bool) -> str:
         """Encrypt or decrypt a message using the Vigenere cipher.
+        Key used here is the name of the current code library.
         
         Args:
             message (str): The message to encrypt or decrypt

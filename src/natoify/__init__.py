@@ -1,3 +1,8 @@
+"""
+Top-level package for natoify. Encoding and decoding of text to a NATO-style alphabet key.
+"""
+
+
 import sys
 
 if sys.version_info[:2] >= (3, 8):

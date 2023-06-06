@@ -5,7 +5,7 @@ Usage:
     natocli [OPTIONS]
 
 Options:    
-    -m, --message FILENAME   Message filename (or '-' to read from stdin)
+    -m, --message FILENAME   Message(input) filename (or '-' to read from stdin)
     -o, --output FILENAME    Output filename (or '-' to write to stdout)
     -d, --decode             Decode the input message
     -e, --encrypted          Message is to be encrypted (or decrypted if decoding))
@@ -18,11 +18,11 @@ Examples:
     >>>natoify -m message.txt -o output.txt
         encode message.txt using NATO code without encryption (default)
 
-    >>>natoify -m message.txt -o output.txt -e -c VULGAR
-        encode message.txt using VULGAR code and encryption
+    >>>natoify -m message.txt -o output.txt -e -c REDNECK
+        encode message.txt using REDNECK code and encryption
 
-    >>>natoify -m message.txt -o output.txt -d -c VULGAR
-        decode message.txt using VULGAR code without decryption
+    >>>natoify -m message.txt -o output.txt -d -c REDNECK
+        decode message.txt using REDNECK code without decryption
 
     >>>natoify -m message.txt -o -
         encode message.txt using NATO code and write to stdout
@@ -48,7 +48,15 @@ from natoify import Natoify
 
 
 def show_codes(nato: Natoify) -> None:
-    """Send list of available codes to stdout"""
+    """Send list of available codes to stdout
+    
+    Args:
+        nato (Natoify): Natoify engine
+
+    Returns:    
+        None
+
+    """
     click.echo("Available code libraries:")
     for code in nato.list_codes():
         click.echo(f"\t{code}")
@@ -57,6 +65,14 @@ def show_codes(nato: Natoify) -> None:
 def try_set_code(code: str, nato: Natoify) -> bool:
     """Set code library for natoify engine
     Fail gracefully if code is not available
+
+    Args:
+        code (str): Code library to use for encoding
+        nato (Natoify): Natoify engine
+
+    Returns:
+        bool: True if code was set successfully, False otherwise
+    
     """
     code = code.upper()
     if code not in nato.list_codes():
@@ -183,13 +199,13 @@ def run(message, output, decode, encrypted, code, list_codes, repl):
 
             encode message.txt using NATO code without encryption (default)
 
-        >>>natoify -m message.txt -o output.txt -e -c VULGAR
+        >>>natoify -m message.txt -o output.txt -e -c REDNECK
 
-            encode message.txt using VULGAR code and encryption
+            encode message.txt using REDNECK code and encryption
 
-        >>>natoify -m message.txt -o output.txt -d -c VULGAR
+        >>>natoify -m message.txt -o output.txt -d -c REDNECK
 
-            decode message.txt using VULGAR code without decryption
+            decode message.txt using REDNECK code without decryption
 
         >>>natoify -m message.txt -o -
 

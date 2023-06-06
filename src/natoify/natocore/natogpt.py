@@ -25,9 +25,9 @@ class NatoGPT():
 		set_new_session() -> None: Set a new chat session.
 		add_to_chat(message: str) -> Tuple[str, str]: Add a message to the chat session.
 		save_chat_log() -> None: Save the chat session to the chat_log directory.
-		load_chat_log(chat_log: str) -> str: Load a chat log from the chat_log directory.
-		get_chat_logs() -> list: Get a list of all chat logs in the chat_log directory.
-		num_tokens_from_messages(messages: list) -> int: Get the number of tokens in a list of messages.
+		load_chat_log(chat_log str) -> str: Load a chat log from the chat_log directory.
+		get_chat_logs() -> list Get a list of all chat logs in the chat_log directory.
+		num_tokens_from_messages(messages list) -> int: Get the number of tokens in a list of messages.
 	
 	"""
 

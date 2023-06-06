@@ -5,7 +5,6 @@ its NATO phonetic alphabet equivalent.
 
 Features:
     - Loading and display of text files using a file dialog
-    - Loading of text files from an internet URL
     - Conversion of text to NATO phonetic alphabet using one of the many libraries
     - Viewing of all libraries available, with the ability to add/remove libraries
       - Display of sample text converted using each library
@@ -13,6 +12,7 @@ Features:
     - Copying of converted text to clipboard
     - ChatGPT integration for generating text to encode
       - Including generation of new code libraries
+    - Playground for testing out new code libraries
     
 """
 
@@ -51,10 +51,19 @@ class NatoApp(ctk.CTk):
         title_text (str): The text to use for the title.
 
     Methods:
-        tabview_callback(event: Event) -> None: The callback for the tabview.
+        tabview_callback(event Event) -> None: The callback for the tabview.
         generate_nato_text() -> None: Generate the NATO text.
         update_code_lib_display() -> None: Update the code library display.
-        TODO: Finish documenting methods.
+        reload_code_libs() -> None: Reload the code libraries.
+        open_txt_file() -> None: Open a text file.
+        save_txt_file() -> None: Save a text file.
+        load_code_lib_file() -> None: Load a code library file.
+        set_play_mode() -> None: Set the playground mode.
+        update_playground() -> None: Update the playground.
+        add_to_chat_thread() -> None: Add to the chat thread.
+        save_chat_session() -> None: Save the chat session.
+        update_chat_session_ddlist() -> None: Update the chat session dropdown list.
+        
     """
     
     def __init__(self):
@@ -327,6 +336,17 @@ class NatoApp(ctk.CTk):
 
 
 class TopMenuBar(ctk.CTkFrame):
+    """ Top menu bar for the application. 
+    
+    Methods:
+        open_file: Open a file dialog to load a file.
+        save_file: Open a file dialog to save a file.
+        load_code_lib_file: Open a file dialog to load a code library file.
+        set_encode_decode(btn_name str): Set the flags for encoding and encrypting.
+        toggle_encrypt: Sets the encrypt flag.
+        set_code_lib(lib_name str): Set the code library.
+
+    """
     def __init__(self, master, **kwargs):
         super().__init__(master, **kwargs)
         self.master = master
@@ -401,6 +421,17 @@ class TopMenuBar(ctk.CTkFrame):
 
 
 class MainTabView(ctk.CTkTabview):
+    """ Main tab view for the application.
+
+    Methods:
+        load_code: Load code from a file into the editor.
+        save_code: Save code from the editor to a file.
+        reload_codes: Reload the code library files from the default directory.
+        clear_code: Clear the code editor.
+        set_chat_log: Set the chat log to the given chat log.
+        save_chat: Save the current chat log to a file.
+
+    """
     def __init__(self, master, **kwargs):
         super().__init__(master, **kwargs)
         self.master = master
@@ -562,7 +593,17 @@ class MainTabView(ctk.CTkTabview):
 
 
 class NatoEngine():
-    """ The main engine for natoify. """
+    """ The main engine for natoify. 
+    
+    Methods:
+        encode(text str, encrypt bool) -> str: Encode the given text using the given library.
+        decode(text str, encrypt bool) -> str: Decode the given text using the given library.
+        load_library(library str) -> None: Load and set the given library.
+        add_library(lib_file_path str) -> None: Add the given library (json file) to the code library.
+        list_libs() -> list: Return a list of the available code libraries.
+        reload_libs() -> None: Reload the code libraries from the default directory.
+
+    """
     def __init__(self, master):
         self.master = master
         self.nato = Natoify()

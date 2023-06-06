@@ -1,8 +1,8 @@
 =======
-natoify
+NATOify
 =======
 
-This is the documentation of **natoify**.
+This is the documentation of **Natoify**.
 
 Contents
 ========
@@ -11,6 +11,7 @@ Contents
    :maxdepth: 2
 
    Overview <README.md>
+   Tutorials <tutorials.md>
    API Reference <api>
    Module Reference <api/modules>
    Requirements <Requirements>
@@ -19,19 +20,9 @@ Contents
 Overview
 --------
 
-What started as a simple coding challenge while taking a basic Python course has 
-gone horribly wrong...thanks to Github Copilot and chatGPT. AI tools
-made it easy to continue building out a simple script into a full blown program, 
-complete with cli interface and windowed desktop app. What does it do?
+Natoify is the tongue-twisting lovechild of the NATO phonetic alphabet and a magic 8-ball. It takes your mundane messages and codes 'em using the NATO alphabet, transforming 'A' into 'ALFA', 'B' into 'BRAVO', and so on. Your once readable message is now a linguistic labyrinth of code words. Want to turn back the gibberish? Just feed it back to Natoify, and voila, you get your original message, digits, and doodads intact. And NATO is not the only way to fly. There are more...many, many more ways to play such as STARWARS, JOHNWICK, HARRYPOTTER, SOUTHPARK, and REDNECK. More than a hundred, last I checked, due to ChatGPT's enthusiasm.
 
-Natoify encodes/decodes plain text messages using a NATO-style phonetic alphabet as a key.
-In standard NATO speak: A=ALFA, B=BRAVO, C=CHARLIE, D=DELTA, etc. 
-Each letter in the message is matched to its corresponding word from the selected
-code library and it then outputs an encoded message in plain text. Decoding a message, the
-text is searched for matching code words and they are replaced with the proper letter
-\(or number/punctuation\). Encoding results in a message with no special characters or
-numbers, only uppercase letters in the form of groups of words. Decoding reveals the
-original message, complete with numbers and special characters.
+Interested? Read on in the :doc:`README`.
 
 This python package includes the basic encoder and decoder `engine.py` along
 with a cli program `natocli.py` and a desktop app `natoapp.py` based on the
@@ -46,7 +37,7 @@ See the :doc:`README` for more information.
 Quick Reference
 ------------------------
 
-Installation.
+Installation (if I manage to get it uploaded to Pypi at some point).
 
 .. code-block:: console  
    
