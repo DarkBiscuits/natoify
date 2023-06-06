@@ -33,6 +33,7 @@ tags
 htmlcov/*
 .coverage
 .coverage.*
+.coveragerc
 .tox
 junit*.xml
 coverage.xml
@@ -43,11 +44,14 @@ build/*
 dist/*
 sdist/*
 docs/api/*
+docs/docs/*
 docs/_rst/*
 docs/_build/*
 cover/*
 MANIFEST
 src/natoify/chat_log/*.json
+dev/*
+data/*
 
 # Per-project virtualenvs
 .venv*/

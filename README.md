@@ -205,13 +205,12 @@ Distributed under the MIT License. See [LICENSE](license.rst) for more informati
 <!-- CONTACT -->
 # Contact
 
-<img src="_static/DarkBiscuit.jpg" alt="DarkBiscuits" width="80" height="80"> DarkBiscuits on Github
+<img src="docs/_static/DarkBiscuit.jpg" alt="DarkBiscuits" width="80" height="80"> DarkBiscuits on Github
 
 Project Link: [https://github.com/darkbiscuits/natoify](https://github.com/darkbiscuits/natoify)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-[API](api)
 
 
 
@@ -228,8 +227,10 @@ Project Link: [https://github.com/darkbiscuits/natoify](https://github.com/darkb
 [issues-url]: https://github.com/darkbiscuits/natoify/issues
 [license-shield]: https://img.shields.io/github/license/darkbiscuits/natoify.svg?style=for-the-badge
 [license-url]: https://github.com/darkbiscuits/natoify/blob/master/LICENSE.txt
-[natocli-screenshot]: _static/natocli-screenshot.png
-[natoapp-screenshot]: _static/natoapp-screenshot.png
+<!-- [natocli-screenshot]: _static/natocli-screenshot.png
+[natoapp-screenshot]: _static/natoapp-screenshot.png -->
+[natocli-screenshot]: docs/_static/natocli-screenshot.png
+[natoapp-screenshot]: docs/_static/natoapp-screenshot.png
 [VScode.com]: https://img.shields.io/static/v1?label=VScode&message=OSX-13.3&color=9fc&style=for-the-badge
 [VScode-url]: https://code.visualstudio.com/
 [github.com]: https://img.shields.io/static/v1?label=Github&message=Copilot&color=yellowgreen&style=for-the-badge
