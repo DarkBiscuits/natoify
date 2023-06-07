@@ -17,12 +17,6 @@
 *** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
 *** https://www.markdownguide.org/basic-syntax/#reference-style-links
 -->
-[![Contributors][contributors-shield]][contributors-url]
-[![Forks][forks-shield]][forks-url]
-[![Stargazers][stars-shield]][stars-url]
-[![Issues][issues-shield]][issues-url]
-[![MIT License][license-shield]][license-url]
-
 
 
 <h1 align="center">Natoify</h1>
@@ -148,7 +142,7 @@ Notes on using the natoapp:
 
  And for those of you hesitant to get an openai api key...yes, usage costs you money. Having spent hours upon hours watching ChatGPT generate libraries for this thing, among various other queries, it ended up costing about $0.43 that month (43 pennies..those things we used to pay for gum with years ago). Which barely put a dent in the $5 credit they give you for signing up so...no excuses.
 
-_For more examples, please refer to the [Documentation](https://example.com)_
+
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
