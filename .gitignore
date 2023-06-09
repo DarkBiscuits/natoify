@@ -52,8 +52,8 @@ MANIFEST
 src/natoify/chat_log/*.json
 dev/*
 data/*
-dev
-data
+/dev
+/data
 
 # Per-project virtualenvs
 .venv*/
