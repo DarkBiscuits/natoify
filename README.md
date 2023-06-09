@@ -199,7 +199,7 @@ Distributed under the MIT License. See [LICENSE](license.rst) for more informati
 <!-- CONTACT -->
 # Contact
 
-<img src="docs/_static/DarkBiscuit.jpg" alt="DarkBiscuits" width="80" height="80"> DarkBiscuits on Github
+<img src="docs/_static/DarkBiscuit.jpg" alt="DarkBiscuits" width="80" height="80"> [DarkBiscuits](https://github.com/DarkBiscuits?tab=repositories) on Github [darkbiscuitstuff@gmail.com](mailto:darkbiscuitstuff@gmail.com)
 
 Project Link: [https://github.com/darkbiscuits/natoify](https://github.com/darkbiscuits/natoify)
 
